@@ -5,33 +5,32 @@ export default function MyPieChart() {
     {
       name: "Groceries",
       value: 400,
+      color: "grey",
     },
     {
       name: "House",
       value: 800,
+      color: "blue",
     },
     {
       name: "Fun",
       value: 600,
+      color: "red",
     },
     {
       name: "Children",
+      color: "green",
       value: 200,
     },
     {
       name: "Savings",
+      color: "violet",
       value: 300,
     },
   ];
 
-  function getRandomColor() {
-    return `rgb(${Math.floor(Math.random() * 256)},${Math.floor(
-      Math.random() * 256
-    )}, ${Math.floor(Math.random() * 256)}`;
-  }
-
   function renderLabel({ name, value }) {
-    return `${name}`;
+    return `${name} - ${value}€`;
   }
   return (
     <PieChart width={300} height={300}>
@@ -47,7 +46,7 @@ export default function MyPieChart() {
         label={renderLabel}
       >
         {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={getRandomColor()} />
+          <Cell key={`cell-${index}`} fill={data[index].color} />
         ))}
       </Pie>
     </PieChart>

@@ -1,39 +1,15 @@
-import { PieChart, Pie, Cell } from "recharts";
+import { PieChart, Pie, Cell, Label } from "recharts";
 
 export default function MyPieChart({ data }) {
-  /*  const data = [
-    {
-      name: "Groceries",
-      value: 400,
-      color: "grey",
-    },
-    {
-      name: "House",
-      value: 800,
-      color: "blue",
-    },
-    {
-      name: "Fun",
-      value: 600,
-      color: "red",
-    },
-    {
-      name: "Children",
-      color: "green",
-      value: 200,
-    },
-    {
-      name: "Savings",
-      color: "violet",
-      value: 300,
-    },
-  ]; */
-
   function renderLabel({ name, value }) {
     return `${name} - ${value}€`;
   }
   return (
-    <PieChart width={300} height={300}>
+    <PieChart
+      width={350}
+      height={300}
+      padding={{ top: 0, right: 50, left: 20, bottom: 5 }}
+    >
       <Pie
         data={data}
         dataKey="value"
@@ -41,12 +17,16 @@ export default function MyPieChart({ data }) {
         cx="50%"
         cy="50%"
         innerRadius={40}
-        outerRadius={80}
+        outerRadius={90}
         fill="#82ca9d"
         label={renderLabel}
+        position="inside"
       >
+        <Label value="Insights " position="center" fill="black" />
         {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={data[index].color} />
+          <>
+            <Cell key={`cell-${index}`} fill={data[index].color} />
+          </>
         ))}
       </Pie>
     </PieChart>

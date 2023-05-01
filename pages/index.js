@@ -1,7 +1,26 @@
 import Head from "next/head";
 import MyPieChart from "@/components/charts/piechart";
+import { useState } from "react";
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 export default function Home({ data, setData }) {
+  const [currentYear, setCurrentYear] = useState(2023);
+  const [currentMonth, setCurrentMonth] = useState(0);
+
   function handleSubmit(event) {
     event.preventDefault();
     const newData = [
@@ -33,7 +52,28 @@ export default function Home({ data, setData }) {
     ];
     setData(newData);
   }
-
+  function handleMinusYear() {
+    setCurrentYear(currentYear - 1);
+  }
+  function handlePlusYear() {
+    setCurrentYear(currentYear + 1);
+  }
+  function handleMinusMonth() {
+    if (currentMonth === 0) {
+      setCurrentMonth(11);
+      setCurrentYear(currentYear - 1);
+    } else {
+      setCurrentMonth(currentMonth - 1);
+    }
+  }
+  function handlePlusMonth() {
+    if (currentMonth === 11) {
+      setCurrentMonth(0);
+      setCurrentYear(currentYear + 1);
+    } else {
+      setCurrentMonth(currentMonth + 1);
+    }
+  }
   return (
     <>
       <Head>
@@ -44,6 +84,12 @@ export default function Home({ data, setData }) {
       </Head>
       <main>
         <h1>INSIGHT</h1>
+        <button onClick={handleMinusYear}>-</button> <h2>{currentYear}</h2>{" "}
+        <button onClick={handlePlusYear}>+</button>
+        <br />
+        <button onClick={handleMinusMonth}>-</button>{" "}
+        <h3>{months[currentMonth]}</h3>{" "}
+        <button onClick={handlePlusMonth}>+</button>
         <form
           onSubmit={(event) => {
             handleSubmit(event);

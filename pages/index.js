@@ -1,11 +1,39 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
 import MyPieChart from "@/components/charts/piechart";
 
-const inter = Inter({ subsets: ["latin"] });
+export default function Home({ data, setData }) {
+  function handleSubmit(event) {
+    event.preventDefault();
+    const newData = [
+      {
+        name: "Groceries",
+        value: parseInt(event.target.elements.groceries.value),
+        color: "grey",
+      },
+      {
+        name: "House",
+        value: parseInt(event.target.elements.house.value),
+        color: "blue",
+      },
+      {
+        name: "Fun",
+        value: parseInt(event.target.elements.fun.value),
+        color: "red",
+      },
+      {
+        name: "Children",
+        color: "green",
+        value: parseInt(event.target.elements.children.value),
+      },
+      {
+        name: "Savings",
+        color: "violet",
+        value: parseInt(event.target.elements.savings.value),
+      },
+    ];
+    setData(newData);
+  }
 
-export default function Home() {
   return (
     <>
       <Head>
@@ -16,7 +44,39 @@ export default function Home() {
       </Head>
       <main>
         <h1>INSIGHT</h1>
-        <MyPieChart></MyPieChart>
+        <form
+          onSubmit={(event) => {
+            handleSubmit(event);
+          }}
+        >
+          <label htmlFor="house">
+            House:
+            <input id="house" type="text"></input>
+          </label>
+          <br />
+          <label htmlFor="groceries">
+            Groceries:
+            <input id="groceries" type="text"></input>
+          </label>
+          <br />
+          <label htmlFor="fun">
+            Fun:
+            <input id="fun" type="text"></input>
+          </label>
+          <br />
+          <label htmlFor="children">
+            Children:
+            <input id="children" type="text"></input>
+          </label>
+          <br />
+          <label htmlFor="savings">
+            Savings:
+            <input id="savings" type="text"></input>
+          </label>
+          <br />
+          <button>Save</button>
+        </form>
+        <MyPieChart data={data}></MyPieChart>
       </main>
     </>
   );

@@ -1,7 +1,7 @@
 import { PieChart, Pie, Cell } from "recharts";
 
-export default function MyPieChart() {
-  const data = [
+export default function MyPieChart({ data }) {
+  /*  const data = [
     {
       name: "Groceries",
       value: 400,
@@ -27,7 +27,7 @@ export default function MyPieChart() {
       color: "violet",
       value: 300,
     },
-  ];
+  ]; */
 
   function renderLabel({ name, value }) {
     return `${name} - ${value}€`;

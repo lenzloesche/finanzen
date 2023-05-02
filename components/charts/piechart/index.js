@@ -33,7 +33,7 @@ export default function MyPieChart({ data, dataPrototype }) {
           cx="50%"
           cy="50%"
           innerRadius={45}
-          outerRadius={90}
+          outerRadius={80}
           fill="#82ca9d"
           label={renderLabel}
           position="inside"

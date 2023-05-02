@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const dataPrototype = {
   "9b51189fa12": {
@@ -31,6 +31,20 @@ const dataPrototype = {
 
 export default function App({ Component, pageProps }) {
   const [data, setData] = useState({});
+
+  useEffect(() => {
+    loadData();
+    function loadData() {
+      const data = JSON.parse(localStorage.getItem("budgetBaerData"));
+      console.log(data);
+      setData(data);
+    }
+  }, []);
+
+  function saveData(dataToSave) {
+    localStorage.setItem("budgetBaerData", JSON.stringify(dataToSave));
+  }
+
   return (
     <>
       <Component
@@ -38,6 +52,7 @@ export default function App({ Component, pageProps }) {
         data={data}
         setData={setData}
         dataPrototype={dataPrototype}
+        saveData={saveData}
       />
     </>
   );

@@ -1,11 +1,12 @@
-import { useState } from "react";
+import StyledButton from "../button";
+import StyledInput from "./Input";
+import StyledGrid from "./Grid";
+
 export default function InputForm({
   handleSubmit,
   inputFields,
   setInputFields,
   dataPrototype,
-  handleEditClick,
-  editModeForInputOn,
 }) {
   function handleChange(event, whichInputField) {
     let newInput = { ...inputFields };
@@ -13,84 +14,34 @@ export default function InputForm({
     setInputFields(newInput);
   }
 
-  function handleColorChange(event, whichInputField) {
-    console.log(event.target.value);
-    let newInput = { ...inputFields };
-    newInput[whichInputField].color = event.target.value;
-    setInputFields(newInput);
-  }
   return (
     <form
       onSubmit={(event) => {
         handleSubmit(event);
       }}
     >
-      {Object.entries(inputFields).map(([objectName, objectValue]) => {
-        if (editModeForInputOn[objectName].isOn) {
+      <StyledGrid>
+        {Object.entries(inputFields).map(([objectName, objectValue]) => {
           return (
-            <div key={objectName}>
-              {" "}
-              <button
-                onClick={() => {
-                  handleEditClick(objectName);
-                }}
-              >
-                {" "}
-                {"Zurück"}
-              </button>
+            <>
               <label htmlFor={objectName} key={objectName}>
-                Umbenennen:
-                <input
-                  id={objectName}
-                  type="text"
-                  value={objectValue.value}
-                  onChange={(event) => {
-                    handleChange(event, objectName);
-                  }}
-                ></input>
-                €
-                <input
-                  type="color"
-                  value={objectName.color}
-                  onChange={(event) => {
-                    handleColorChange(event, objectName);
-                  }}
-                />
-                <br />
+                {dataPrototype[objectName].name}:
               </label>
-            </div>
-          );
-        }
-
-        return (
-          <div key={objectName}>
-            {" "}
-            <button
-              onClick={() => {
-                handleEditClick(objectName);
-              }}
-            >
-              {" "}
-              {"Editieren"}
-            </button>
-            <label htmlFor={objectName} key={objectName}>
-              {dataPrototype[objectName].name}:
-              <input
+              <StyledInput
                 id={objectName}
                 type="number"
                 value={objectValue.value}
                 onChange={(event) => {
                   handleChange(event, objectName);
                 }}
-              ></input>
-              €
-              <br />
-            </label>
-          </div>
-        );
-      })}
+              ></StyledInput>
+              <p> €</p>
+            </>
+          );
+        })}
+      </StyledGrid>
       <br />
-      <button>Speichern</button>
+      <StyledButton>Speichern</StyledButton>
     </form>
   );
 }

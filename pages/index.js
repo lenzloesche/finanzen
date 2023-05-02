@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 import InputForm from "@/components/InputForm";
 import Image from "next/image";
 import Calendar from "@/components/calendar";
+import styled from "styled-components";
+import FlexDiv from "@/components/FlexDiv";
 
 const MyPieChart = dynamic(() => import("@/components/charts/piechart"), {
   ssr: false,
@@ -59,16 +61,13 @@ const months = [
   "Dezember",
 ];
 
-export default function Home({ data, setData, dataPrototype }) {
+export default function Home({ data, setData, dataPrototype, saveData }) {
   const [currentYear, setCurrentYear] = useState(2023);
   const [currentMonth, setCurrentMonth] = useState(0);
   const [currentData, setCurrentData] = useState([]);
   const [inputFields, setInputFields] = useState(
     JSON.parse(JSON.stringify(startingInput))
   );
-  const [editModeForInputOn, setEditModeForInputOn] = useState({
-    ...startingEditModeOn,
-  });
 
   useEffect(() => {
     switchDates(currentYear, currentMonth);
@@ -100,7 +99,6 @@ export default function Home({ data, setData, dataPrototype }) {
       const newObject = {
         value: parseInt(inputFields[arrayOfInputFields[i].key].value),
       };
-      //  newObject.value = parseInt(inputFields[arrayOfInputFields[i].key].value);
       const idOfInputField = arrayOfInputFields[i].key;
       newData = { ...newData, [idOfInputField]: { ...newObject } };
     }
@@ -112,6 +110,7 @@ export default function Home({ data, setData, dataPrototype }) {
     newFullData[currentYear][currentMonth] = newData;
     setData(newFullData);
     setCurrentData(newData);
+    saveData(newFullData);
   }
 
   function switchDates(switchToYear, switchToMonth) {
@@ -177,34 +176,41 @@ export default function Home({ data, setData, dataPrototype }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Image
-          height="100"
-          width="100"
-          alt="budgedbaer"
-          src="/budget_baer.png"
-        ></Image>
-        <h1>BÄRENÜBERSICHT</h1>
-        <Calendar
-          handleMinusYear={handleMinusYear}
-          handlePlusYear={handlePlusYear}
-          currentYear={currentYear}
-          handleMinusMonth={handleMinusMonth}
-          handlePlusMonth={handlePlusMonth}
-          currentMonth={months[currentMonth]}
-        />
-        <InputForm
-          handleSubmit={handleSubmit}
-          inputFields={inputFields}
-          setInputFields={setInputFields}
-          dataPrototype={dataPrototype}
-          handleEditClick={handleEditClick}
-          editModeForInputOn={editModeForInputOn}
-        />
-        <MyPieChart
-          data={currentData}
-          dataPrototype={dataPrototype}
-        ></MyPieChart>
+        <FlexDiv>
+          <Image
+            height="100"
+            width="100"
+            alt="budgedbaer"
+            src="/budget_baer.png"
+          ></Image>
+          <Heading1>BÄRENÜBERSICHT</Heading1>
+          <Calendar
+            handleMinusYear={handleMinusYear}
+            handlePlusYear={handlePlusYear}
+            currentYear={currentYear}
+            handleMinusMonth={handleMinusMonth}
+            handlePlusMonth={handlePlusMonth}
+            currentMonth={months[currentMonth]}
+          />{" "}
+          <MyPieChart
+            data={currentData}
+            dataPrototype={dataPrototype}
+          ></MyPieChart>
+          <InputForm
+            handleSubmit={handleSubmit}
+            inputFields={inputFields}
+            setInputFields={setInputFields}
+            dataPrototype={dataPrototype}
+            handleEditClick={handleEditClick}
+          />{" "}
+        </FlexDiv>
       </main>
     </>
   );
 }
+
+const Heading1 = styled.h1`
+  margin: 0;
+  padding: 0;
+  font-size: 36px;
+`;

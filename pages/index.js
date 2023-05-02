@@ -1,6 +1,11 @@
 import Head from "next/head";
-import MyPieChart from "@/components/charts/piechart";
-import { useState } from "react";
+//import MyPieChart from "@/components/charts/piechart";
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+
+const MyPieChart = dynamic(() => import("@/components/charts/piechart"), {
+  ssr: false,
+});
 
 const months = [
   "January",
@@ -74,6 +79,7 @@ export default function Home({ data, setData }) {
       setCurrentMonth(currentMonth + 1);
     }
   }
+
   return (
     <>
       <Head>
@@ -122,7 +128,7 @@ export default function Home({ data, setData }) {
           <br />
           <button>Save</button>
         </form>
-        <MyPieChart data={data}></MyPieChart>
+        <MyPieChart data={data}></MyPieChart>;
       </main>
     </>
   );

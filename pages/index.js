@@ -79,7 +79,6 @@ export default function Home({ data, setData, dataPrototype, saveData }) {
       [id]: { isOn: !editModeForInputOn[id].isOn },
     };
     setEditModeForInputOn(newEditModeForInputOn);
-    console.log("id", id);
   }
 
   function clearInputFields(newData) {

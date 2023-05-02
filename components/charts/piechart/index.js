@@ -37,6 +37,8 @@ export default function MyPieChart({ data, dataPrototype }) {
           fill="#82ca9d"
           label={renderLabel}
           position="inside"
+          animationDuration={300}
+          animationEasing="linear"
         >
           {dataArray?.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={entry.color} />
@@ -52,4 +54,7 @@ const ContainerDiv = styled.div`
   height: 300px;
   background-image: url("piechartbackgroundbaer.png");
   background-size: cover;
+
+  border-radius: 10px;
+  background-color: #efefef;
 `;

@@ -36,7 +36,6 @@ export default function App({ Component, pageProps }) {
     loadData();
     function loadData() {
       const data = JSON.parse(localStorage.getItem("budgetBaerData"));
-      console.log(data);
       setData(data);
     }
   }, []);

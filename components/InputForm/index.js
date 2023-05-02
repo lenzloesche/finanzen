@@ -1,6 +1,8 @@
 import StyledButton from "../button";
 import StyledInput from "./Input";
 import StyledGrid from "./Grid";
+import StyledForm from "./Form";
+import React from "react";
 
 export default function InputForm({
   handleSubmit,
@@ -15,7 +17,7 @@ export default function InputForm({
   }
 
   return (
-    <form
+    <StyledForm
       onSubmit={(event) => {
         handleSubmit(event);
       }}
@@ -23,7 +25,7 @@ export default function InputForm({
       <StyledGrid>
         {Object.entries(inputFields).map(([objectName, objectValue]) => {
           return (
-            <>
+            <React.Fragment key={objectName}>
               <label htmlFor={objectName} key={objectName}>
                 {dataPrototype[objectName].name}:
               </label>
@@ -33,15 +35,14 @@ export default function InputForm({
                 value={objectValue.value}
                 onChange={(event) => {
                   handleChange(event, objectName);
+                  handleSubmit(event);
                 }}
               ></StyledInput>
               <p> €</p>
-            </>
+            </React.Fragment>
           );
         })}
       </StyledGrid>
-      <br />
-      <StyledButton>Speichern</StyledButton>
-    </form>
+    </StyledForm>
   );
 }

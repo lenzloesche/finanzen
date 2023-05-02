@@ -1,10 +1,33 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import InputForm from "@/components/InputForm";
 
 const MyPieChart = dynamic(() => import("@/components/charts/piechart"), {
   ssr: false,
 });
+const startingInput = {
+  Groceries: {
+    value: 400,
+    color: "grey",
+  },
+  House: {
+    value: 800,
+    color: "blue",
+  },
+  Fun: {
+    value: 600,
+    color: "red",
+  },
+  Children: {
+    color: "green",
+    value: 200,
+  },
+  Savings: {
+    color: "violet",
+    value: 300,
+  },
+};
 
 const months = [
   "January",
@@ -25,36 +48,40 @@ export default function Home({ data, setData }) {
   const [currentYear, setCurrentYear] = useState(2023);
   const [currentMonth, setCurrentMonth] = useState(0);
   const [currentData, setCurrentData] = useState([]);
+  const [inputFields, setInputFields] = useState(startingInput);
+
+  function clearInputFields(newData) {
+    console.log(newData);
+    setInputFields(newData);
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
-    const newData = [
-      {
-        name: "Groceries",
-        value: parseInt(event.target.elements.groceries.value),
+
+    console.log("event.target.elements", event.target.elements);
+
+    const newData = {
+      Groceries: {
+        value: parseInt(event.target.elements["Groceries"].value),
         color: "grey",
       },
-      {
-        name: "House",
-        value: parseInt(event.target.elements.house.value),
+      House: {
+        value: parseInt(event.target.elements["House"].value),
         color: "blue",
       },
-      {
-        name: "Fun",
-        value: parseInt(event.target.elements.fun.value),
+      Fun: {
+        value: parseInt(event.target.elements["Fun"].value),
         color: "red",
       },
-      {
-        name: "Children",
+      Children: {
         color: "green",
-        value: parseInt(event.target.elements.children.value),
+        value: parseInt(event.target.elements["Children"].value),
       },
-      {
-        name: "Savings",
+      Savings: {
         color: "violet",
-        value: parseInt(event.target.elements.savings.value),
+        value: parseInt(event.target.elements["Savings"].value),
       },
-    ];
+    };
     let newFullData = { ...data };
     newFullData = createYearAndMonth(newFullData, currentYear, currentMonth);
     newFullData[currentYear][currentMonth] = newData;
@@ -68,6 +95,7 @@ export default function Home({ data, setData }) {
     const newData = newFullData[switchToYear][switchToMonth];
     setData(newFullData);
     setCurrentData(newData);
+    clearInputFields(newData);
   }
 
   function createYearAndMonth(newFullData, yearToCreate, monthToCreate) {
@@ -75,7 +103,7 @@ export default function Home({ data, setData }) {
       newFullData[yearToCreate] = {};
     }
     if (!newFullData[yearToCreate][monthToCreate]) {
-      newFullData[yearToCreate][monthToCreate] = [];
+      newFullData[yearToCreate][monthToCreate] = {};
     }
     return newFullData;
   }
@@ -125,38 +153,11 @@ export default function Home({ data, setData }) {
         <button onClick={handleMinusMonth}>-</button>{" "}
         <h3>{months[currentMonth]}</h3>{" "}
         <button onClick={handlePlusMonth}>+</button>
-        <form
-          onSubmit={(event) => {
-            handleSubmit(event);
-          }}
-        >
-          <label htmlFor="house">
-            House:
-            <input id="house" type="text"></input>
-          </label>
-          <br />
-          <label htmlFor="groceries">
-            Groceries:
-            <input id="groceries" type="text"></input>
-          </label>
-          <br />
-          <label htmlFor="fun">
-            Fun:
-            <input id="fun" type="text"></input>
-          </label>
-          <br />
-          <label htmlFor="children">
-            Children:
-            <input id="children" type="text"></input>
-          </label>
-          <br />
-          <label htmlFor="savings">
-            Savings:
-            <input id="savings" type="text"></input>
-          </label>
-          <br />
-          <button>Save</button>
-        </form>
+        <InputForm
+          handleSubmit={handleSubmit}
+          inputFields={inputFields}
+          setInputFields={setInputFields}
+        />
         <MyPieChart data={currentData}></MyPieChart>;
       </main>
     </>

@@ -2,33 +2,28 @@ import "@/styles/globals.css";
 import { useState } from "react";
 const emptyData = {
   2023: {
-    0: [
-      {
-        name: "Groceries",
+    0: {
+      Groceries: {
         value: 400,
         color: "grey",
       },
-      {
-        name: "House",
+      House: {
         value: 800,
         color: "blue",
       },
-      {
-        name: "Fun",
+      Fun: {
         value: 600,
         color: "red",
       },
-      {
-        name: "Children",
+      Children: {
         color: "green",
         value: 200,
       },
-      {
-        name: "Savings",
+      Savings: {
         color: "violet",
         value: 300,
       },
-    ],
+    },
   },
 };
 export default function App({ Component, pageProps }) {

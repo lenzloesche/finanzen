@@ -9,7 +9,6 @@ export default function InputForm({
     newInput[whichInputField].value = event.target.value;
     setInputFields(newInput);
   }
-  console.log("inputFields", inputFields);
   return (
     <form
       onSubmit={(event) => {

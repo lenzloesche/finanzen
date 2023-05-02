@@ -6,7 +6,7 @@ export default function MyPieChart({ data }) {
   const [dataArray, setDataArray] = useState([]);
 
   function renderLabel({ name, value }) {
-    return `${name} - ${value}€`;
+    return `${name} / ${value}€`;
   }
   useEffect(() => {
     convertDataObjectToArray();
@@ -18,7 +18,6 @@ export default function MyPieChart({ data }) {
           value: objectValue.value,
         };
       });
-      console.log("newArray", newArray);
       setDataArray(newArray);
     }
   }, [data]);

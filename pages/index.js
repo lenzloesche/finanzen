@@ -8,24 +8,24 @@ const MyPieChart = dynamic(() => import("@/components/charts/piechart"), {
 });
 const startingInput = {
   Groceries: {
-    value: 400,
+    value: 0,
     color: "grey",
   },
   House: {
-    value: 800,
+    value: 0,
     color: "blue",
   },
   Fun: {
-    value: 600,
+    value: 0,
     color: "red",
   },
   Children: {
     color: "green",
-    value: 200,
+    value: 0,
   },
   Savings: {
     color: "violet",
-    value: 300,
+    value: 0,
   },
 };
 
@@ -51,14 +51,11 @@ export default function Home({ data, setData }) {
   const [inputFields, setInputFields] = useState(startingInput);
 
   function clearInputFields(newData) {
-    console.log(newData);
     setInputFields(newData);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-
-    console.log("event.target.elements", event.target.elements);
 
     const newData = {
       Groceries: {
@@ -103,7 +100,7 @@ export default function Home({ data, setData }) {
       newFullData[yearToCreate] = {};
     }
     if (!newFullData[yearToCreate][monthToCreate]) {
-      newFullData[yearToCreate][monthToCreate] = {};
+      newFullData[yearToCreate][monthToCreate] = startingInput;
     }
     return newFullData;
   }

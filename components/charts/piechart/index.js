@@ -1,6 +1,7 @@
 import { PieChart, Pie, Cell, Label } from "recharts";
 import { useState } from "react";
 import { useEffect } from "react";
+import styled from "styled-components";
 
 export default function MyPieChart({ data, dataPrototype }) {
   const [dataArray, setDataArray] = useState([]);
@@ -23,24 +24,32 @@ export default function MyPieChart({ data, dataPrototype }) {
   }, [data]);
 
   return (
-    <PieChart id="piechart" width={350} height={300}>
-      <Pie
-        data={dataArray}
-        dataKey="value"
-        nameKey="name"
-        cx="50%"
-        cy="50%"
-        innerRadius={40}
-        outerRadius={90}
-        fill="#82ca9d"
-        label={renderLabel}
-        position="inside"
-      >
-        <Label value="Übersicht" position="center" fill="black" />
-        {dataArray?.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={entry.color} />
-        ))}
-      </Pie>
-    </PieChart>
+    <ContainerDiv>
+      <PieChart id="piechart" width={350} height={300}>
+        <Pie
+          data={dataArray}
+          dataKey="value"
+          nameKey="name"
+          cx="50%"
+          cy="50%"
+          innerRadius={45}
+          outerRadius={90}
+          fill="#82ca9d"
+          label={renderLabel}
+          position="inside"
+        >
+          {dataArray?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={entry.color} />
+          ))}{" "}
+        </Pie>{" "}
+      </PieChart>
+    </ContainerDiv>
   );
 }
+
+const ContainerDiv = styled.div`
+  width: 350px;
+  height: 300px;
+  background-image: url("piechartbackgroundbaer.png");
+  background-size: cover;
+`;

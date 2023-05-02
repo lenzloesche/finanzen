@@ -7,24 +7,19 @@ const MyPieChart = dynamic(() => import("@/components/charts/piechart"), {
   ssr: false,
 });
 const startingInput = {
-  Groceries: {
-    value: 0,
-    color: "grey",
-  },
-  House: {
-    value: 0,
-    color: "blue",
-  },
-  Fun: {
-    value: 0,
-    color: "red",
-  },
-  Children: {
-    color: "green",
+  "9b51189fa12": {
     value: 0,
   },
-  Savings: {
-    color: "violet",
+  b51189fa126: {
+    value: 0,
+  },
+  "51189fa126b": {
+    value: 0,
+  },
+  "1189fa126b6": {
+    value: 0,
+  },
+  be90e393b31: {
     value: 0,
   },
 };
@@ -44,7 +39,7 @@ const months = [
   "December",
 ];
 
-export default function Home({ data, setData }) {
+export default function Home({ data, setData, dataPrototype }) {
   const [currentYear, setCurrentYear] = useState(2023);
   const [currentMonth, setCurrentMonth] = useState(0);
   const [currentData, setCurrentData] = useState([]);
@@ -63,29 +58,20 @@ export default function Home({ data, setData }) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    const newData = {
-      Groceries: {
-        value: parseInt(inputFields["Groceries"].value),
-        color: inputFields["Groceries"].color,
-      },
-      House: {
-        value: parseInt(inputFields["House"].value),
-        color: inputFields["House"].color,
-      },
-      Fun: {
-        value: parseInt(inputFields["Fun"].value),
-        color: inputFields["Fun"].color,
-      },
-      Children: {
-        color: inputFields["Children"].color,
-        value: parseInt(inputFields["Children"].value),
-      },
-      Savings: {
-        color: inputFields["Savings"].color,
-        value: parseInt(inputFields["Savings"].value),
-      },
-    };
+    let newData = {};
 
+    const arrayOfInputFields = Object.entries(dataPrototype).map(
+      ([key, value]) => ({ key, value })
+    );
+
+    for (let i = 0; i < arrayOfInputFields.length; i++) {
+      const newObject = {
+        value: parseInt(inputFields[arrayOfInputFields[i].key].value),
+      };
+      //  newObject.value = parseInt(inputFields[arrayOfInputFields[i].key].value);
+      const idOfInputField = arrayOfInputFields[i].key;
+      newData = { ...newData, [idOfInputField]: { ...newObject } };
+    }
     let newFullData = createYearAndMonth(
       { ...data },
       currentYear,
@@ -170,8 +156,12 @@ export default function Home({ data, setData }) {
           handleSubmit={handleSubmit}
           inputFields={inputFields}
           setInputFields={setInputFields}
+          dataPrototype={dataPrototype}
         />
-        <MyPieChart data={currentData}></MyPieChart>
+        <MyPieChart
+          data={currentData}
+          dataPrototype={dataPrototype}
+        ></MyPieChart>
       </main>
     </>
   );

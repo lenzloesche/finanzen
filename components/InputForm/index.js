@@ -3,6 +3,7 @@ export default function InputForm({
   handleSubmit,
   inputFields,
   setInputFields,
+  dataPrototype,
 }) {
   function handleChange(event, whichInputField) {
     let newInput = { ...inputFields };
@@ -24,29 +25,37 @@ export default function InputForm({
     >
       {Object.entries(inputFields).map(([objectName, objectValue]) => {
         return (
-          <label htmlFor={objectName} key={objectName}>
-            {objectName}:
-            <input
-              id={objectName}
-              type="number"
-              value={objectValue.value}
-              onChange={(event) => {
-                handleChange(event, objectName);
-              }}
-            ></input>
-            €
-            <input
-              type="color"
-              value={objectName.color}
-              onChange={(event) => {
-                handleColorChange(event, objectName);
-              }}
-            />
-            <br />
-          </label>
+          <div div key={objectName}>
+            {" "}
+            <button> Edit</button>
+            <label htmlFor={objectName} key={objectName}>
+              {dataPrototype[objectName].name}:
+              <input
+                id={objectName}
+                type="number"
+                value={objectValue.value}
+                onChange={(event) => {
+                  handleChange(event, objectName);
+                }}
+              ></input>
+              €
+              <input
+                type="color"
+                value={objectName.color}
+                onChange={(event) => {
+                  handleColorChange(event, objectName);
+                }}
+              />
+              <br />
+            </label>
+          </div>
         );
       })}
+      <br />
 
+      <button> +</button>
+      <button> -</button>
+      <br />
       <br />
       <button>Save</button>
     </form>

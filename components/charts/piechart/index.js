@@ -2,7 +2,7 @@ import { PieChart, Pie, Cell, Label } from "recharts";
 import { useState } from "react";
 import { useEffect } from "react";
 
-export default function MyPieChart({ data }) {
+export default function MyPieChart({ data, dataPrototype }) {
   const [dataArray, setDataArray] = useState([]);
 
   function renderLabel({ name, value }) {
@@ -13,8 +13,8 @@ export default function MyPieChart({ data }) {
     function convertDataObjectToArray() {
       const newArray = Object.entries(data).map(([objectName, objectValue]) => {
         return {
-          name: objectName,
-          color: objectValue.color,
+          name: dataPrototype[objectName].name,
+          color: dataPrototype[objectName].color,
           value: objectValue.value,
         };
       });
@@ -23,12 +23,7 @@ export default function MyPieChart({ data }) {
   }, [data]);
 
   return (
-    <PieChart
-      id="piechart"
-      width={350}
-      height={300}
-      //padding={{ top: 0, right: 50, left: 20, bottom: 5 }}
-    >
+    <PieChart id="piechart" width={350} height={300}>
       <Pie
         data={dataArray}
         dataKey="value"

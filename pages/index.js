@@ -48,9 +48,12 @@ export default function Home({ data, setData }) {
   const [currentYear, setCurrentYear] = useState(2023);
   const [currentMonth, setCurrentMonth] = useState(0);
   const [currentData, setCurrentData] = useState([]);
-  const [inputFields, setInputFields] = useState(startingInput);
+  const [inputFields, setInputFields] = useState(
+    JSON.parse(JSON.stringify(startingInput))
+  );
 
   function clearInputFields(newData) {
+    console.log(newData);
     setInputFields(newData);
   }
 
@@ -59,50 +62,61 @@ export default function Home({ data, setData }) {
 
     const newData = {
       Groceries: {
-        value: parseInt(event.target.elements["Groceries"].value),
+        value: parseInt(inputFields["Groceries"].value),
         color: "grey",
       },
       House: {
-        value: parseInt(event.target.elements["House"].value),
+        value: parseInt(inputFields["House"].value),
         color: "blue",
       },
       Fun: {
-        value: parseInt(event.target.elements["Fun"].value),
+        value: parseInt(inputFields["Fun"].value),
         color: "red",
       },
       Children: {
         color: "green",
-        value: parseInt(event.target.elements["Children"].value),
+        value: parseInt(inputFields["Children"].value),
       },
       Savings: {
         color: "violet",
-        value: parseInt(event.target.elements["Savings"].value),
+        value: parseInt(inputFields["Savings"].value),
       },
     };
-    let newFullData = { ...data };
-    newFullData = createYearAndMonth(newFullData, currentYear, currentMonth);
+
+    let newFullData = createYearAndMonth(
+      { ...data },
+      currentYear,
+      currentMonth
+    );
     newFullData[currentYear][currentMonth] = newData;
     setData(newFullData);
     setCurrentData(newData);
   }
 
   function switchDates(switchToYear, switchToMonth) {
-    let newFullData = { ...data };
-    newFullData = createYearAndMonth(newFullData, switchToYear, switchToMonth);
-    const newData = newFullData[switchToYear][switchToMonth];
+    const newFullData = createYearAndMonth(
+      { ...data },
+      switchToYear,
+      switchToMonth
+    );
+    const newData = { ...newFullData[switchToYear][switchToMonth] };
     setData(newFullData);
     setCurrentData(newData);
     clearInputFields(newData);
   }
 
   function createYearAndMonth(newFullData, yearToCreate, monthToCreate) {
-    if (!newFullData[yearToCreate]) {
-      newFullData[yearToCreate] = {};
+    let fullDataCopy = { ...newFullData };
+    if (!fullDataCopy[yearToCreate]) {
+      fullDataCopy[yearToCreate] = {};
     }
-    if (!newFullData[yearToCreate][monthToCreate]) {
-      newFullData[yearToCreate][monthToCreate] = startingInput;
+    if (!fullDataCopy[yearToCreate][monthToCreate]) {
+      fullDataCopy[yearToCreate][monthToCreate] = JSON.parse(
+        JSON.stringify(startingInput)
+      );
+      console.log("startingInput", startingInput);
     }
-    return newFullData;
+    return fullDataCopy;
   }
 
   function handleMinusYear() {

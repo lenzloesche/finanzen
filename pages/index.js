@@ -1,5 +1,4 @@
 import Head from "next/head";
-//import MyPieChart from "@/components/charts/piechart";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
@@ -25,6 +24,7 @@ const months = [
 export default function Home({ data, setData }) {
   const [currentYear, setCurrentYear] = useState(2023);
   const [currentMonth, setCurrentMonth] = useState(0);
+  const [currentData, setCurrentData] = useState([]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -55,28 +55,57 @@ export default function Home({ data, setData }) {
         value: parseInt(event.target.elements.savings.value),
       },
     ];
-    setData(newData);
+    let newFullData = { ...data };
+    newFullData = createYearAndMonth(newFullData, currentYear, currentMonth);
+    newFullData[currentYear][currentMonth] = newData;
+    setData(newFullData);
+    setCurrentData(newData);
   }
+
+  function switchDates(switchToYear, switchToMonth) {
+    let newFullData = { ...data };
+    newFullData = createYearAndMonth(newFullData, switchToYear, switchToMonth);
+    const newData = newFullData[switchToYear][switchToMonth];
+    setData(newFullData);
+    setCurrentData(newData);
+  }
+
+  function createYearAndMonth(newFullData, yearToCreate, monthToCreate) {
+    if (!newFullData[yearToCreate]) {
+      newFullData[yearToCreate] = {};
+    }
+    if (!newFullData[yearToCreate][monthToCreate]) {
+      newFullData[yearToCreate][monthToCreate] = [];
+    }
+    return newFullData;
+  }
+
   function handleMinusYear() {
     setCurrentYear(currentYear - 1);
+    switchDates(currentYear - 1, currentMonth);
   }
   function handlePlusYear() {
     setCurrentYear(currentYear + 1);
+    switchDates(currentYear + 1, currentMonth);
   }
   function handleMinusMonth() {
     if (currentMonth === 0) {
       setCurrentMonth(11);
       setCurrentYear(currentYear - 1);
+      switchDates(currentYear - 1, 11);
     } else {
       setCurrentMonth(currentMonth - 1);
+      switchDates(currentYear, currentMonth - 1);
     }
   }
   function handlePlusMonth() {
     if (currentMonth === 11) {
       setCurrentMonth(0);
       setCurrentYear(currentYear + 1);
+      switchDates(currentYear + 1, 0);
     } else {
       setCurrentMonth(currentMonth + 1);
+      switchDates(currentYear, currentMonth + 1);
     }
   }
 
@@ -128,7 +157,7 @@ export default function Home({ data, setData }) {
           <br />
           <button>Save</button>
         </form>
-        <MyPieChart data={data}></MyPieChart>;
+        <MyPieChart data={currentData}></MyPieChart>;
       </main>
     </>
   );

@@ -52,8 +52,11 @@ export default function Home({ data, setData }) {
     JSON.parse(JSON.stringify(startingInput))
   );
 
+  useEffect(() => {
+    switchDates(currentYear, currentMonth);
+  }, []);
+
   function clearInputFields(newData) {
-    console.log(newData);
     setInputFields(newData);
   }
 
@@ -63,22 +66,22 @@ export default function Home({ data, setData }) {
     const newData = {
       Groceries: {
         value: parseInt(inputFields["Groceries"].value),
-        color: "grey",
+        color: inputFields["Groceries"].color,
       },
       House: {
         value: parseInt(inputFields["House"].value),
-        color: "blue",
+        color: inputFields["House"].color,
       },
       Fun: {
         value: parseInt(inputFields["Fun"].value),
-        color: "red",
+        color: inputFields["Fun"].color,
       },
       Children: {
-        color: "green",
+        color: inputFields["Children"].color,
         value: parseInt(inputFields["Children"].value),
       },
       Savings: {
-        color: "violet",
+        color: inputFields["Savings"].color,
         value: parseInt(inputFields["Savings"].value),
       },
     };
@@ -114,7 +117,6 @@ export default function Home({ data, setData }) {
       fullDataCopy[yearToCreate][monthToCreate] = JSON.parse(
         JSON.stringify(startingInput)
       );
-      console.log("startingInput", startingInput);
     }
     return fullDataCopy;
   }
@@ -169,7 +171,7 @@ export default function Home({ data, setData }) {
           inputFields={inputFields}
           setInputFields={setInputFields}
         />
-        <MyPieChart data={currentData}></MyPieChart>;
+        <MyPieChart data={currentData}></MyPieChart>
       </main>
     </>
   );

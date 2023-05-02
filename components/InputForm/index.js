@@ -9,6 +9,13 @@ export default function InputForm({
     newInput[whichInputField].value = event.target.value;
     setInputFields(newInput);
   }
+
+  function handleColorChange(event, whichInputField) {
+    console.log(event.target.value);
+    let newInput = { ...inputFields };
+    newInput[whichInputField].color = event.target.value;
+    setInputFields(newInput);
+  }
   return (
     <form
       onSubmit={(event) => {
@@ -27,10 +34,19 @@ export default function InputForm({
                 handleChange(event, objectName);
               }}
             ></input>
+            €
+            <input
+              type="color"
+              value={objectName.color}
+              onChange={(event) => {
+                handleColorChange(event, objectName);
+              }}
+            />
             <br />
           </label>
         );
       })}
+
       <br />
       <button>Save</button>
     </form>

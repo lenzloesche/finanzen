@@ -36,7 +36,7 @@ export default function MyPieChart({ data, dataPrototype }) {
         label={renderLabel}
         position="inside"
       >
-        <Label value="Insights " position="center" fill="black" />
+        <Label value="Übersicht" position="center" fill="black" />
         {dataArray?.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={entry.color} />
         ))}

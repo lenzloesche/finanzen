@@ -4,6 +4,8 @@ export default function InputForm({
   inputFields,
   setInputFields,
   dataPrototype,
+  handleEditClick,
+  editModeForInputOn,
 }) {
   function handleChange(event, whichInputField) {
     let newInput = { ...inputFields };
@@ -24,10 +26,53 @@ export default function InputForm({
       }}
     >
       {Object.entries(inputFields).map(([objectName, objectValue]) => {
+        if (editModeForInputOn[objectName].isOn) {
+          return (
+            <div key={objectName}>
+              {" "}
+              <button
+                onClick={() => {
+                  handleEditClick(objectName);
+                }}
+              >
+                {" "}
+                {"Zurück"}
+              </button>
+              <label htmlFor={objectName} key={objectName}>
+                Umbenennen:
+                <input
+                  id={objectName}
+                  type="text"
+                  value={objectValue.value}
+                  onChange={(event) => {
+                    handleChange(event, objectName);
+                  }}
+                ></input>
+                €
+                <input
+                  type="color"
+                  value={objectName.color}
+                  onChange={(event) => {
+                    handleColorChange(event, objectName);
+                  }}
+                />
+                <br />
+              </label>
+            </div>
+          );
+        }
+
         return (
-          <div div key={objectName}>
+          <div key={objectName}>
             {" "}
-            <button> Edit</button>
+            <button
+              onClick={() => {
+                handleEditClick(objectName);
+              }}
+            >
+              {" "}
+              {"Editieren"}
+            </button>
             <label htmlFor={objectName} key={objectName}>
               {dataPrototype[objectName].name}:
               <input
@@ -39,25 +84,13 @@ export default function InputForm({
                 }}
               ></input>
               €
-              <input
-                type="color"
-                value={objectName.color}
-                onChange={(event) => {
-                  handleColorChange(event, objectName);
-                }}
-              />
               <br />
             </label>
           </div>
         );
       })}
       <br />
-
-      <button> +</button>
-      <button> -</button>
-      <br />
-      <br />
-      <button>Save</button>
+      <button>Speichern</button>
     </form>
   );
 }

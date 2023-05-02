@@ -2,6 +2,8 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import InputForm from "@/components/InputForm";
+import Image from "next/image";
+import Calendar from "@/components/calendar";
 
 const MyPieChart = dynamic(() => import("@/components/charts/piechart"), {
   ssr: false,
@@ -24,19 +26,37 @@ const startingInput = {
   },
 };
 
+const startingEditModeOn = {
+  "9b51189fa12": {
+    isOn: false,
+  },
+  b51189fa126: {
+    isOn: false,
+  },
+  "51189fa126b": {
+    isOn: false,
+  },
+  "1189fa126b6": {
+    isOn: false,
+  },
+  be90e393b31: {
+    isOn: false,
+  },
+};
+
 const months = [
-  "January",
-  "February",
-  "March",
+  "Januar",
+  "Februar",
+  "März",
   "April",
-  "May",
-  "June",
-  "July",
+  "Mai",
+  "Juni",
+  "Juli",
   "August",
   "September",
-  "October",
+  "Oktober",
   "November",
-  "December",
+  "Dezember",
 ];
 
 export default function Home({ data, setData, dataPrototype }) {
@@ -46,10 +66,22 @@ export default function Home({ data, setData, dataPrototype }) {
   const [inputFields, setInputFields] = useState(
     JSON.parse(JSON.stringify(startingInput))
   );
+  const [editModeForInputOn, setEditModeForInputOn] = useState({
+    ...startingEditModeOn,
+  });
 
   useEffect(() => {
     switchDates(currentYear, currentMonth);
   }, []);
+
+  function handleEditClick(id) {
+    const newEditModeForInputOn = {
+      ...editModeForInputOn,
+      [id]: { isOn: !editModeForInputOn[id].isOn },
+    };
+    setEditModeForInputOn(newEditModeForInputOn);
+    console.log("id", id);
+  }
 
   function clearInputFields(newData) {
     setInputFields(newData);
@@ -145,18 +177,28 @@ export default function Home({ data, setData, dataPrototype }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>INSIGHT</h1>
-        <button onClick={handleMinusYear}>-</button> <h2>{currentYear}</h2>{" "}
-        <button onClick={handlePlusYear}>+</button>
-        <br />
-        <button onClick={handleMinusMonth}>-</button>{" "}
-        <h3>{months[currentMonth]}</h3>{" "}
-        <button onClick={handlePlusMonth}>+</button>
+        <Image
+          height="100"
+          width="100"
+          alt="budgedbaer"
+          src="/budget_baer.png"
+        ></Image>
+        <h1>BÄRENÜBERSICHT</h1>
+        <Calendar
+          handleMinusYear={handleMinusYear}
+          handlePlusYear={handlePlusYear}
+          currentYear={currentYear}
+          handleMinusMonth={handleMinusMonth}
+          handlePlusMonth={handlePlusMonth}
+          currentMonth={months[currentMonth]}
+        />
         <InputForm
           handleSubmit={handleSubmit}
           inputFields={inputFields}
           setInputFields={setInputFields}
           dataPrototype={dataPrototype}
+          handleEditClick={handleEditClick}
+          editModeForInputOn={editModeForInputOn}
         />
         <MyPieChart
           data={currentData}

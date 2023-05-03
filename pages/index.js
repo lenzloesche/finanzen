@@ -11,38 +11,27 @@ const MyPieChart = dynamic(() => import("@/components/charts/piechart"), {
   ssr: false,
 });
 const startingInput = {
+  valueSum: 0,
+  valueIstSum: 0,
   "9b51189fa12": {
     value: 0,
+    valueIst: 0,
   },
   b51189fa126: {
     value: 0,
+    valueIst: 0,
   },
   "51189fa126b": {
     value: 0,
+    valueIst: 0,
   },
   "1189fa126b6": {
     value: 0,
+    valueIst: 0,
   },
   be90e393b31: {
     value: 0,
-  },
-};
-
-const startingEditModeOn = {
-  "9b51189fa12": {
-    isOn: false,
-  },
-  b51189fa126: {
-    isOn: false,
-  },
-  "51189fa126b": {
-    isOn: false,
-  },
-  "1189fa126b6": {
-    isOn: false,
-  },
-  be90e393b31: {
-    isOn: false,
+    valueIst: 0,
   },
 };
 
@@ -85,6 +74,14 @@ export default function Home({ data, setData, dataPrototype, saveData }) {
     setInputFields(newData);
   }
 
+  function calculateSum(arrayOfNumbers) {
+    let countSum = 0;
+    for (const number of arrayOfNumbers) {
+      countSum += number;
+    }
+    return countSum;
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -97,6 +94,7 @@ export default function Home({ data, setData, dataPrototype, saveData }) {
     for (let i = 0; i < arrayOfInputFields.length; i++) {
       const newObject = {
         value: parseInt(inputFields[arrayOfInputFields[i].key].value),
+        valueIst: parseInt(inputFields[arrayOfInputFields[i].key].valueIst),
       };
       const idOfInputField = arrayOfInputFields[i].key;
       newData = { ...newData, [idOfInputField]: { ...newObject } };
@@ -107,6 +105,16 @@ export default function Home({ data, setData, dataPrototype, saveData }) {
       currentMonth
     );
     newFullData[currentYear][currentMonth] = newData;
+
+    const arrayofNumbers = Object.entries(newData).map(
+      ([key, value]) => value.value
+    );
+    newFullData["valueSum"] = calculateSum(arrayofNumbers);
+    const arrayofNumbersIst = Object.entries(newData).map(
+      ([key, value]) => value.valueIst
+    );
+    newFullData["valueSumIst"] = calculateSum(arrayofNumbersIst);
+
     setData(newFullData);
     setCurrentData(newData);
     saveData(newFullData);
@@ -194,6 +202,8 @@ export default function Home({ data, setData, dataPrototype, saveData }) {
           <MyPieChart
             data={currentData}
             dataPrototype={dataPrototype}
+            valueSum={data["valueSum"]}
+            valueSumIst={data["valueSumIst"]}
           ></MyPieChart>
           <InputForm
             handleSubmit={handleSubmit}
@@ -201,6 +211,8 @@ export default function Home({ data, setData, dataPrototype, saveData }) {
             setInputFields={setInputFields}
             dataPrototype={dataPrototype}
             handleEditClick={handleEditClick}
+            valueSum={data["valueSum"]}
+            valueSumIst={data["valueSumIst"]}
           />{" "}
         </FlexDiv>
       </main>

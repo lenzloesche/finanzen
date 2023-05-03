@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import StyledButton from "../button";
 
-export default function Calendar({
+export default function StyledCalendar({
   handleMinusYear,
   handlePlusYear,
   handleMinusMonth,
@@ -11,34 +11,34 @@ export default function Calendar({
 }) {
   return (
     <>
-      <Banner>
+      <StyledBanner>
         <StyledButton onClick={handleMinusYear}>-</StyledButton>{" "}
-        <Heading2>{currentYear}</Heading2>{" "}
+        <StyledHeading2>{currentYear}</StyledHeading2>{" "}
         <StyledButton onClick={handlePlusYear}>+</StyledButton>
-      </Banner>
-      <Banner>
+      </StyledBanner>
+      <StyledBanner>
         <StyledButton onClick={handleMinusMonth}>-</StyledButton>{" "}
-        <Heading3>{currentMonth}</Heading3>{" "}
+        <StyledHeading3>{currentMonth}</StyledHeading3>{" "}
         <StyledButton onClick={handlePlusMonth}>+</StyledButton>
-      </Banner>
+      </StyledBanner>
     </>
   );
 }
 
-const Heading2 = styled.h2`
+const StyledHeading2 = styled.h2`
   margin: 0;
   padding: 0;
   font-size: 30px;
 `;
 
-const Heading3 = styled.h3`
+const StyledHeading3 = styled.h3`
   margin: 0;
   padding: 0;
   font-size: 26px;
 `;
-const Banner = styled.div`
+const StyledBanner = styled.div`
   display: grid;
-  width: 260px;
+  width: 300px;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   justify-items: center;

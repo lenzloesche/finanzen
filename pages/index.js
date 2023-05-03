@@ -5,7 +5,7 @@ import InputForm from "@/components/InputForm";
 import Image from "next/image";
 import Calendar from "@/components/calendar";
 import styled from "styled-components";
-import FlexDiv from "@/components/FlexDiv";
+import StyledFlexDiv from "@/components/FlexDiv";
 
 const MyPieChart = dynamic(() => import("@/components/charts/piechart"), {
   ssr: false,
@@ -206,7 +206,7 @@ export default function Home({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <FlexDiv>
+        <StyledFlexDiv>
           <Image
             height="100"
             width="100"
@@ -235,9 +235,8 @@ export default function Home({
             handleEditClick={handleEditClick}
             valueSum={currentData.total?.valueSum}
             valueSumIst={currentData.total?.valueSumIst}
-            difference={currentData.total?.difference}
           />{" "}
-        </FlexDiv>
+        </StyledFlexDiv>
       </main>
     </>
   );

@@ -55,7 +55,7 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
     }
   }, [data]);
   return (
-    <ContainerDiv>
+    <StyledContainerDiv>
       <PieChart id="piechart" width={350} height={300}>
         <Pie
           data={dataArray}
@@ -93,11 +93,11 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
           ))}
         </Pie>
       </PieChart>
-    </ContainerDiv>
+    </StyledContainerDiv>
   );
 }
 
-const ContainerDiv = styled.div`
+const StyledContainerDiv = styled.div`
   width: 350px;
   height: 300px;
   background-image: url("piechartbackgroundbaer.png");

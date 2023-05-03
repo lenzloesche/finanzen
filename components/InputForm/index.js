@@ -1,4 +1,3 @@
-import StyledButton from "../button";
 import StyledInput from "./Input";
 import StyledGrid from "./Grid";
 import StyledForm from "./Form";
@@ -11,7 +10,6 @@ export default function InputForm({
   dataPrototype,
   valueSumIst,
   valueSum,
-  difference,
 }) {
   function handleChange(event, whichInputField) {
     let newInput = { ...inputFields };

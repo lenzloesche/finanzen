@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-const FlexDiv = styled.div`
+const StyledFlexDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-export default FlexDiv;
+export default StyledFlexDiv;

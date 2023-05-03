@@ -5,7 +5,7 @@ const dataPrototype = {
   "9b51189fa12": {
     id: "9b51189fa12",
     name: "Einkauf",
-    color: "grey",
+    color: "#c0d313",
   },
   b51189fa126: {
     id: "b51189fa126",

@@ -11,6 +11,7 @@ export default function InputForm({
   dataPrototype,
   valueSumIst,
   valueSum,
+  difference,
 }) {
   function handleChange(event, whichInputField) {
     let newInput = { ...inputFields };
@@ -29,12 +30,13 @@ export default function InputForm({
       }}
     >
       <StyledGrid>
+        <p></p>
         <p>SOLL</p>
-
-        <StyledButton>-</StyledButton>
-
         <p></p>
         {Object.entries(inputFields).map(([objectName, objectValue]) => {
+          if (objectName === "total") {
+            return;
+          }
           return (
             <React.Fragment key={objectName}>
               <label htmlFor={objectName} key={objectName}>
@@ -53,16 +55,18 @@ export default function InputForm({
             </React.Fragment>
           );
         })}
+        <p></p>
         <p>Total: {valueSum}€</p>
       </StyledGrid>
       <StyledGrid>
+        <p></p>
         <p>IST</p>
-
-        <StyledButton>-</StyledButton>
-
         <p></p>
 
         {Object.entries(inputFields).map(([objectName, objectValue]) => {
+          if (objectName === "total") {
+            return;
+          }
           return (
             <React.Fragment key={objectName}>
               <label htmlFor={`${objectName}Ist`} key={`${objectName}Ist`}>
@@ -81,7 +85,9 @@ export default function InputForm({
             </React.Fragment>
           );
         })}
+        <p></p>
         <p>Total: {valueSumIst}€</p>
+        <p></p>
       </StyledGrid>
     </StyledForm>
   );

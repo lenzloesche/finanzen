@@ -11,8 +11,12 @@ const MyPieChart = dynamic(() => import("@/components/charts/piechart"), {
   ssr: false,
 });
 const startingInput = {
-  valueSum: 0,
-  valueIstSum: 0,
+  total: {
+    valueSum: 0,
+    valueSumIst: 0,
+    difference: 0,
+  },
+
   "9b51189fa12": {
     value: 0,
     valueIst: 0,
@@ -85,7 +89,7 @@ export default function Home({ data, setData, dataPrototype, saveData }) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    let newData = {};
+    let newData = { total: { valueSum: 0, valueSumIst: 0, difference: 0 } };
 
     const arrayOfInputFields = Object.entries(dataPrototype).map(
       ([key, value]) => ({ key, value })
@@ -104,17 +108,26 @@ export default function Home({ data, setData, dataPrototype, saveData }) {
       currentYear,
       currentMonth
     );
+
+    const arrayofNumbers = Object.entries(newData).map(([key, value]) => {
+      if (key != "total") {
+        return value.value;
+      } else {
+        return 0;
+      }
+    });
+    newData["total"]["valueSum"] = calculateSum(arrayofNumbers);
+    const arrayofNumbersIst = Object.entries(newData).map(([key, value]) => {
+      if (key != "total") {
+        return value.valueIst;
+      } else {
+        return 0;
+      }
+    });
+    newData["total"]["valueSumIst"] = calculateSum(arrayofNumbersIst);
+    newData["total"].difference =
+      newData["total"]["valueSumIst"] - newData["total"]["valueSum"];
     newFullData[currentYear][currentMonth] = newData;
-
-    const arrayofNumbers = Object.entries(newData).map(
-      ([key, value]) => value.value
-    );
-    newFullData["valueSum"] = calculateSum(arrayofNumbers);
-    const arrayofNumbersIst = Object.entries(newData).map(
-      ([key, value]) => value.valueIst
-    );
-    newFullData["valueSumIst"] = calculateSum(arrayofNumbersIst);
-
     setData(newFullData);
     setCurrentData(newData);
     saveData(newFullData);
@@ -202,8 +215,7 @@ export default function Home({ data, setData, dataPrototype, saveData }) {
           <MyPieChart
             data={currentData}
             dataPrototype={dataPrototype}
-            valueSum={data["valueSum"]}
-            valueSumIst={data["valueSumIst"]}
+            difference={currentData.total?.difference}
           ></MyPieChart>
           <InputForm
             handleSubmit={handleSubmit}
@@ -211,8 +223,9 @@ export default function Home({ data, setData, dataPrototype, saveData }) {
             setInputFields={setInputFields}
             dataPrototype={dataPrototype}
             handleEditClick={handleEditClick}
-            valueSum={data["valueSum"]}
-            valueSumIst={data["valueSumIst"]}
+            valueSum={currentData.total?.valueSum}
+            valueSumIst={currentData.total?.valueSumIst}
+            difference={currentData.total?.difference}
           />{" "}
         </FlexDiv>
       </main>

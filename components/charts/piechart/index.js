@@ -3,12 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import styled from "styled-components";
 
-export default function MyPieChart({
-  data,
-  dataPrototype,
-  valueSumIst,
-  valueSum,
-}) {
+export default function MyPieChart({ data, dataPrototype, difference }) {
   const [dataArray, setDataArray] = useState([]);
   const [dataArrayIst, setDataArrayIst] = useState([]);
 
@@ -18,11 +13,10 @@ export default function MyPieChart({
   useEffect(() => {
     let ueberschuss = 0;
     let ueberschussIst = 0;
-    const subtraction = valueSumIst - valueSum;
-    if (subtraction >= 0) {
-      ueberschuss = subtraction;
+    if (difference >= 0) {
+      ueberschuss = difference;
     } else {
-      ueberschussIst = -subtraction;
+      ueberschussIst = -difference;
     }
 
     convertDataObjectToArray();
@@ -35,6 +29,7 @@ export default function MyPieChart({
           value: objectValue.value,
         };
       });
+      newArray.splice(0, 1);
       newArray.push({
         name: "",
         color: "#efefef",
@@ -50,6 +45,7 @@ export default function MyPieChart({
           value: objectValue.valueIst,
         };
       });
+      newArray.splice(0, 1);
       newArray.push({
         name: "",
         color: "#efefef",

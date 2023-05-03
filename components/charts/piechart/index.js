@@ -137,7 +137,7 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
 
 const StyledContainerDiv = styled.div`
   width: 350px;
-  height: 300px;
+  height: 320px;
   ${(props) =>
     !props.drawBear && !props.drawBearIst
       ? "background-image: url('piechartbackgroundbaer.png');  background-size: cover;"
@@ -146,6 +146,5 @@ const StyledContainerDiv = styled.div`
   background-color: #efefef;
   @media (min-width: 440px) {
     width: 440px;
-    height: 320px;
   }
 `;

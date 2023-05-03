@@ -13,21 +13,23 @@ export default function InputForm({
 }) {
   function handleChange(event, whichInputField) {
     let newInput = { ...inputFields };
-    if (event.target.value < 0) {
+    if (event.target.value <= 0 || event.target.value === "") {
       newInput[whichInputField].value = 0;
     } else {
-      newInput[whichInputField].value = event.target.value;
+      newInput[whichInputField].value = parseInt(event.target.value, 10);
+      event.target.value = parseInt(event.target.value, 10);
     }
     setInputFields(newInput);
   }
   function handleChangeIst(event, whichInputField) {
     let newInput = { ...inputFields };
-
-    if (event.target.value < 0) {
+    if (event.target.value <= 0 || event.target.value === "") {
       newInput[whichInputField].valueIst = 0;
     } else {
-      newInput[whichInputField].valueIst = event.target.value;
+      newInput[whichInputField].valueIst = parseInt(event.target.value, 10);
+      event.target.value = parseInt(event.target.value, 10);
     }
+
     setInputFields(newInput);
   }
   return (

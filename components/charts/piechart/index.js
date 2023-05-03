@@ -6,6 +6,8 @@ import styled from "styled-components";
 export default function MyPieChart({ data, dataPrototype, difference }) {
   const [dataArray, setDataArray] = useState([]);
   const [dataArrayIst, setDataArrayIst] = useState([]);
+  const [drawBear, setDrawBear] = useState(true);
+  const [drawBearIst, setDrawBearIst] = useState(true);
 
   function renderLabel({ name, value }) {
     if (value !== 0) {
@@ -31,7 +33,11 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
     convertDataObjectToArray();
     convertDataObjectToArrayIst();
     function convertDataObjectToArray() {
+      let howManyNonZeros = 0;
       const newArray = Object.entries(data).map(([objectName, objectValue]) => {
+        if (objectValue.value) {
+          howManyNonZeros += Number(objectValue.value);
+        }
         return {
           name: dataPrototype[objectName]?.name,
           color: dataPrototype[objectName]?.color,
@@ -44,10 +50,20 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
         color: "#efefef",
         value: ueberschuss,
       });
+
+      if (howManyNonZeros > 0) {
+        setDrawBear(true);
+      } else {
+        setDrawBear(false);
+      }
       setDataArray(newArray);
     }
     function convertDataObjectToArrayIst() {
+      let howManyNonZeros = 0;
       const newArray = Object.entries(data).map(([objectName, objectValue]) => {
+        if (objectValue.valueIst) {
+          howManyNonZeros += Number(objectValue.valueIst);
+        }
         return {
           name: dataPrototype[objectName]?.name,
           color: dataPrototype[objectName]?.color,
@@ -60,12 +76,17 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
         color: "#efefef",
         value: ueberschussIst,
       });
+      if (howManyNonZeros > 0) {
+        setDrawBearIst(true);
+      } else {
+        setDrawBearIst(false);
+      }
       setDataArrayIst(newArray);
     }
   }, [data]);
 
   return (
-    <StyledContainerDiv>
+    <StyledContainerDiv drawBear={drawBear} drawBearIst={drawBearIst}>
       <PieChart id="piechart" width={350} height={300}>
         <Pie
           data={dataArrayIst}
@@ -115,8 +136,10 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
 const StyledContainerDiv = styled.div`
   width: 350px;
   height: 300px;
-  background-image: url("piechartbackgroundbaer.png");
-  background-size: cover;
+  ${(props) =>
+    !props.drawBear && !props.drawBearIst
+      ? "background-image: url('piechartbackgroundbaer.png');  background-size: cover;"
+      : ""}
   border-radius: 10px;
   background-color: #efefef;
 `;

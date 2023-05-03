@@ -8,8 +8,17 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
   const [dataArrayIst, setDataArrayIst] = useState([]);
 
   function renderLabel({ name, value }) {
-    return `${name}`;
+    if (value !== 0) {
+      return `${name}`;
+    }
   }
+
+  function renderInnerLabel({ name, value, index }) {
+    if (value !== 0 && dataArrayIst[index].value === 0) {
+      return `${name}`;
+    }
+  }
+
   useEffect(() => {
     let ueberschuss = 0;
     let ueberschussIst = 0;
@@ -54,9 +63,30 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
       setDataArrayIst(newArray);
     }
   }, [data]);
+
   return (
     <StyledContainerDiv>
       <PieChart id="piechart" width={350} height={300}>
+        <Pie
+          data={dataArrayIst}
+          dataKey="value"
+          nameKey="name"
+          cx="50%"
+          cy="50%"
+          innerRadius={80}
+          outerRadius={120}
+          fill="#82ca9d"
+          label={renderLabel}
+          labelLine={false}
+          position="inside"
+          animationBegin={0}
+          animationDuration={300}
+          animationEasing="linear"
+        >
+          {dataArray?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={entry.color} />
+          ))}
+        </Pie>{" "}
         <Pie
           data={dataArray}
           dataKey="value"
@@ -65,27 +95,12 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
           cy="50%"
           innerRadius={45}
           outerRadius={80}
+          label={renderInnerLabel}
+          labelLine={false}
           fill="#82ca9d"
           position="inside"
           animationDuration={300}
-          animationEasing="linear"
-        >
-          {dataArray?.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.color} />
-          ))}
-        </Pie>
-        <Pie
-          data={dataArrayIst}
-          dataKey="value"
-          nameKey="name"
-          cx="50%"
-          cy="50%"
-          innerRadius={80}
-          outerRadius={110}
-          fill="#82ca9d"
-          label={renderLabel}
-          position="inside"
-          animationDuration={300}
+          animationBegin={0}
           animationEasing="linear"
         >
           {dataArray?.map((entry, index) => (
@@ -102,7 +117,6 @@ const StyledContainerDiv = styled.div`
   height: 300px;
   background-image: url("piechartbackgroundbaer.png");
   background-size: cover;
-
   border-radius: 10px;
   background-color: #efefef;
 `;

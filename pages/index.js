@@ -208,10 +208,10 @@ export default function Home({
       <main>
         <StyledFlexDiv>
           <Image
-            height="70"
-            width="375"
+            height="100"
+            width="100"
             alt="budgedbaer"
-            src="/budgetbaerbanner.png"
+            src="/budget_baer.png"
           ></Image>
           <Heading1>BÄRENÜBERSICHT</Heading1>
           <Calendar

@@ -31,6 +31,7 @@ const dataPrototype = {
 
 export default function App({ Component, pageProps }) {
   const [data, setData] = useState({});
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -42,6 +43,7 @@ export default function App({ Component, pageProps }) {
         setData(data);
       }
     }
+    setIsLoaded(true);
   }, []);
 
   function saveData(dataToSave) {
@@ -56,6 +58,8 @@ export default function App({ Component, pageProps }) {
         setData={setData}
         dataPrototype={dataPrototype}
         saveData={saveData}
+        isLoaded={isLoaded}
+        setIsLoaded={setIsLoaded}
       />
     </>
   );

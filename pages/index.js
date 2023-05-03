@@ -54,7 +54,14 @@ const months = [
   "Dezember",
 ];
 
-export default function Home({ data, setData, dataPrototype, saveData }) {
+export default function Home({
+  data,
+  setData,
+  dataPrototype,
+  saveData,
+  isLoaded,
+  setIsLoaded,
+}) {
   const [currentYear, setCurrentYear] = useState(2023);
   const [currentMonth, setCurrentMonth] = useState(0);
   const [currentData, setCurrentData] = useState([]);
@@ -63,8 +70,11 @@ export default function Home({ data, setData, dataPrototype, saveData }) {
   );
 
   useEffect(() => {
-    switchDates(currentYear, currentMonth);
-  }, []);
+    if (isLoaded === true) {
+      switchDates(currentYear, currentMonth);
+      setIsLoaded(false);
+    }
+  }, [data]);
 
   function handleEditClick(id) {
     const newEditModeForInputOn = {

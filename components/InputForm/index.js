@@ -13,12 +13,23 @@ export default function InputForm({
 }) {
   function handleChange(event, whichInputField) {
     let newInput = { ...inputFields };
-    newInput[whichInputField].value = event.target.value;
+    if (event.target.value <= 0 || event.target.value === "") {
+      newInput[whichInputField].value = 0;
+    } else {
+      newInput[whichInputField].value = parseInt(event.target.value, 10);
+      event.target.value = parseInt(event.target.value, 10);
+    }
     setInputFields(newInput);
   }
   function handleChangeIst(event, whichInputField) {
     let newInput = { ...inputFields };
-    newInput[whichInputField].valueIst = event.target.value;
+    if (event.target.value <= 0 || event.target.value === "") {
+      newInput[whichInputField].valueIst = 0;
+    } else {
+      newInput[whichInputField].valueIst = parseInt(event.target.value, 10);
+      event.target.value = parseInt(event.target.value, 10);
+    }
+
     setInputFields(newInput);
   }
   return (
@@ -41,6 +52,7 @@ export default function InputForm({
                 {dataPrototype[objectName]?.name}:
               </label>
               <StyledInput
+                min="0"
                 id={objectName}
                 type="number"
                 value={objectValue.value}
@@ -71,6 +83,7 @@ export default function InputForm({
                 {dataPrototype[objectName]?.name}:
               </label>
               <StyledInput
+                min="0"
                 id={`${objectName}Ist`}
                 type="number"
                 value={objectValue.valueIst}

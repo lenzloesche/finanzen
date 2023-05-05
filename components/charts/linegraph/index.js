@@ -23,15 +23,8 @@ export default function Linegraph({ data, currentYear, dataPrototype }) {
         let newMonth = {};
         Object.keys(dataPrototype).forEach((element) => {
           const categoryName = dataPrototype[element].name;
-
-          if (data[currentYear]) {
-            if (data[currentYear][month]) {
-              if (data[currentYear][month][element]) {
-                newMonth[categoryName] =
-                  data[currentYear][month][element].value;
-              }
-            }
-          }
+          newMonth[categoryName] =
+            data?.[currentYear]?.[month]?.[element].value;
         });
         newMonth.name = months[month];
         newData.push(newMonth);

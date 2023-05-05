@@ -12,8 +12,14 @@ export default function Rename({
   changeCategoryName,
   deletCategory,
   addCategory,
+  changeCategoryColor,
 }) {
   const [categorySelected, setCategorySelected] = useState("");
+  const [color, setColor] = useState("ffffff");
+
+  function handleColorChange(event) {
+    setColor(event.target.value);
+  }
 
   function handleSelectChange(event) {
     const selectedOption = event.target.value;
@@ -25,6 +31,7 @@ export default function Rename({
     console.log(event.target.elements.rename.value);
     const newName = event.target.elements.rename.value;
     changeCategoryName(categorySelected, newName);
+    changeCategoryColor(categorySelected, color);
   }
 
   function handleAddCategoryClick(event) {
@@ -70,6 +77,13 @@ export default function Rename({
             Umbenennen:
             <StyledInput id="rename"></StyledInput>
           </label>
+          <input
+            type="color"
+            value={color}
+            onChange={(event) => {
+              handleColorChange(event);
+            }}
+          />
           <StyledButton type="submit">Umbenennen</StyledButton>
         </StyledForm>
         <StyledButton

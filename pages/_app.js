@@ -39,12 +39,21 @@ export default function App({ Component, pageProps }) {
     const newCategories = JSON.parse(JSON.stringify(categories));
     newCategories[id].name = newName;
     setCategories(newCategories);
+    saveCategories(newCategories);
+  }
+
+  function changeCategoryColor(id, newColor) {
+    const newCategories = JSON.parse(JSON.stringify(categories));
+    newCategories[id].color = newColor;
+    setCategories(newCategories);
+    saveCategories(newCategories);
   }
 
   function deletCategory(id) {
     const newCategories = JSON.parse(JSON.stringify(categories));
     delete newCategories[id];
     setCategories(newCategories);
+    saveCategories(newCategories);
   }
 
   function addCategory() {
@@ -52,6 +61,7 @@ export default function App({ Component, pageProps }) {
     const newId = uid();
     newCategories[newId] = { id: newId, name: "Neu", color: "red" };
     setCategories(newCategories);
+    saveCategories(newCategories);
   }
 
   useEffect(() => {
@@ -64,11 +74,28 @@ export default function App({ Component, pageProps }) {
         setData(data);
       }
     }
+
+    loadCategories();
+    function loadCategories() {
+      const savedCategories = JSON.parse(
+        localStorage.getItem("budgetBaerCategories")
+      );
+      if (savedCategories === null) {
+        setCategories(dataPrototype);
+      } else {
+        setCategories(savedCategories);
+      }
+    }
+
     setIsLoaded(true);
   }, []);
 
   function saveData(dataToSave) {
     localStorage.setItem("budgetBaerData", JSON.stringify(dataToSave));
+  }
+
+  function saveCategories(newCategories) {
+    localStorage.setItem("budgetBaerCategories", JSON.stringify(newCategories));
   }
 
   return (
@@ -84,6 +111,8 @@ export default function App({ Component, pageProps }) {
         changeCategoryName={changeCategoryName}
         deletCategory={deletCategory}
         addCategory={addCategory}
+        changeCategoryColor={changeCategoryColor}
+        saveCategories={saveCategories}
       />
     </>
   );

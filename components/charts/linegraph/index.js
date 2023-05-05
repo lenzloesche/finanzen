@@ -13,7 +13,13 @@ import { uid } from "uid";
 import months from "@/utils/data/months";
 import styled from "styled-components";
 
-export default function Linegraph({ data, currentYear, dataPrototype }) {
+export default function Linegraph({
+  data,
+  currentYear,
+  dataPrototype,
+  whichValue,
+  title,
+}) {
   const [rechartsData, setRechartsData] = useState([]);
 
   useEffect(() => {
@@ -26,7 +32,7 @@ export default function Linegraph({ data, currentYear, dataPrototype }) {
         Object.keys(dataPrototype).forEach((element) => {
           const categoryName = dataPrototype[element].name;
           newMonth[categoryName] =
-            data?.[currentYear]?.[month]?.[element].value;
+            data?.[currentYear]?.[month]?.[element]?.[whichValue];
         });
         newMonth.name = months[month];
         newData.push(newMonth);
@@ -36,33 +42,36 @@ export default function Linegraph({ data, currentYear, dataPrototype }) {
   }, [data, currentYear]);
 
   return (
-    <StyledContainerDiv>
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart
-          width={350}
-          height={350}
-          data={rechartsData}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
+    <>
+      <h3>{title}</h3>
+      <StyledContainerDiv>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart
+            width={350}
+            height={350}
+            data={rechartsData}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
 
-          {Object.keys(dataPrototype).map((key, index) => {
-            return (
-              <Line
-                key={uid()}
-                type="monotone"
-                dataKey={dataPrototype[key].name}
-                stroke={dataPrototype[key].color}
-              />
-            );
-          })}
-        </LineChart>
-      </ResponsiveContainer>
-    </StyledContainerDiv>
+            {Object.keys(dataPrototype).map((key, index) => {
+              return (
+                <Line
+                  key={uid()}
+                  type="monotone"
+                  dataKey={dataPrototype[key].name}
+                  stroke={dataPrototype[key].color}
+                />
+              );
+            })}
+          </LineChart>
+        </ResponsiveContainer>
+      </StyledContainerDiv>
+    </>
   );
 }
 

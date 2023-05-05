@@ -30,6 +30,15 @@ export default function ExpensesGraph({ data, dataPrototype }) {
           current={currentYear}
         />
         <Linegraph
+          whichValue="value"
+          title="SOLL"
+          data={data}
+          currentYear={currentYear}
+          dataPrototype={dataPrototype}
+        />
+        <Linegraph
+          whichValue="valueIst"
+          title="IST"
           data={data}
           currentYear={currentYear}
           dataPrototype={dataPrototype}

@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import { useEffect, useState } from "react";
+import { uid } from "uid";
 
 const dataPrototype = {
   "9b51189fa12": {
@@ -42,7 +43,15 @@ export default function App({ Component, pageProps }) {
 
   function deletCategory(id) {
     const newCategories = JSON.parse(JSON.stringify(categories));
-    delete newCategories?.[id];
+    delete newCategories[id];
+    setCategories(newCategories);
+  }
+
+  function addCategory() {
+    const newCategories = JSON.parse(JSON.stringify(categories));
+    const newId = uid();
+    newCategories[newId] = { id: newId, name: "Neu", color: "red" };
+    setCategories(newCategories);
   }
 
   useEffect(() => {
@@ -74,6 +83,7 @@ export default function App({ Component, pageProps }) {
         setIsLoaded={setIsLoaded}
         changeCategoryName={changeCategoryName}
         deletCategory={deletCategory}
+        addCategory={addCategory}
       />
     </>
   );

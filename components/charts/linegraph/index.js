@@ -8,6 +8,7 @@ import {
   Legend,
   Line,
 } from "recharts";
+import { uid } from "uid";
 
 const months = [
   "Januar",
@@ -31,26 +32,26 @@ export default function Linegraph({ data, currentYear, dataPrototype }) {
     changeDataForRechart();
     function changeDataForRechart() {
       let newData = [];
+
       for (let month = 0; month < 12; month++) {
-        const categoryName = dataPrototype["9b51189fa12"].name;
-        let newMonth = { name: months[month], [categoryName]: 0 };
-        if (data[currentYear]) {
-          if (data[currentYear][month]) {
-            if (data[currentYear][month]["9b51189fa12"]) {
-              newMonth[categoryName] =
-                data[currentYear][month]["9b51189fa12"].value;
+        let newMonth = {};
+        Object.keys(dataPrototype).forEach((element) => {
+          const categoryName = dataPrototype[element].name;
+
+          if (data[currentYear]) {
+            if (data[currentYear][month]) {
+              if (data[currentYear][month][element]) {
+                newMonth[categoryName] =
+                  data[currentYear][month][element].value;
+              }
             }
           }
-        }
+        });
         newData.push(newMonth);
       }
       setRechartsData(newData);
     }
   }, [data, currentYear]);
-
-  console.log("data", data);
-  console.log("currentYear", currentYear);
-  console.log("rechartsData", rechartsData);
 
   return (
     <LineChart
@@ -64,12 +65,17 @@ export default function Linegraph({ data, currentYear, dataPrototype }) {
       <YAxis />
       <Tooltip />
       <Legend />
-      <Line
-        type="monotone"
-        dataKey={dataPrototype["9b51189fa12"].name}
-        stroke="#8884d8"
-      />
-      <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+
+      {Object.keys(dataPrototype).map((key, index) => {
+        return (
+          <Line
+            key={uid()}
+            type="monotone"
+            dataKey={dataPrototype[key].name}
+            stroke={dataPrototype[key].color}
+          />
+        );
+      })}
     </LineChart>
   );
 }

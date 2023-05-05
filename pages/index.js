@@ -215,13 +215,15 @@ export default function Home({
           ></Image>
           <Heading1>BÄRENÜBERSICHT</Heading1>
           <Calendar
-            handleMinusYear={handleMinusYear}
-            handlePlusYear={handlePlusYear}
-            currentYear={currentYear}
-            handleMinusMonth={handleMinusMonth}
-            handlePlusMonth={handlePlusMonth}
-            currentMonth={months[currentMonth]}
-          />{" "}
+            handleMinus={handleMinusYear}
+            handlePlus={handlePlusYear}
+            current={currentYear}
+          />
+          <Calendar
+            handleMinus={handleMinusMonth}
+            handlePlus={handlePlusMonth}
+            current={months[currentMonth]}
+          />
           <MyPieChart
             data={currentData}
             dataPrototype={dataPrototype}

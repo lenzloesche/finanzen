@@ -2,24 +2,19 @@ import styled from "styled-components";
 import StyledButton from "../button";
 
 export default function StyledCalendar({
-  handleMinusYear,
-  handlePlusYear,
+  handleMinus,
+  handlePlus,
   handleMinusMonth,
   handlePlusMonth,
-  currentYear,
+  current,
   currentMonth,
 }) {
   return (
     <>
       <StyledBanner>
-        <StyledButton onClick={handleMinusYear}>-</StyledButton>{" "}
-        <StyledHeading2>{currentYear}</StyledHeading2>{" "}
-        <StyledButton onClick={handlePlusYear}>+</StyledButton>
-      </StyledBanner>
-      <StyledBanner>
-        <StyledButton onClick={handleMinusMonth}>-</StyledButton>{" "}
-        <StyledHeading3>{currentMonth}</StyledHeading3>{" "}
-        <StyledButton onClick={handlePlusMonth}>+</StyledButton>
+        <StyledButton onClick={handleMinus}>-</StyledButton>{" "}
+        <StyledHeading2>{current}</StyledHeading2>{" "}
+        <StyledButton onClick={handlePlus}>+</StyledButton>
       </StyledBanner>
     </>
   );

@@ -31,7 +31,7 @@ export default function Rename({
     event.preventDefault();
     const newName = event.target.elements.rename.value;
     changeCategoryName(categorySelected, newName);
-    changeCategoryColor(categorySelected, color);
+    //changeCategoryColor(categorySelected, color);
   }
 
   function handleAddCategoryClick(event) {

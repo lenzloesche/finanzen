@@ -33,28 +33,25 @@ const dataPrototype = {
 
 export default function App({ Component, pageProps }) {
   const [data, setData] = useState({});
+  const [categories, setCategories] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
-  const [categories, setCategories] = useState(dataPrototype);
 
   function changeCategoryName(id, newName) {
     const newCategories = JSON.parse(JSON.stringify(categories));
     newCategories[id].name = newName;
     setCategories(newCategories);
-    saveCategories(newCategories);
   }
 
   function changeCategoryColor(id, newColor) {
     const newCategories = JSON.parse(JSON.stringify(categories));
     newCategories[id].color = newColor;
     setCategories(newCategories);
-    saveCategories(newCategories);
   }
 
   function deletCategory(id) {
     const newCategories = JSON.parse(JSON.stringify(categories));
     delete newCategories[id];
     setCategories(newCategories);
-    saveCategories(newCategories);
   }
 
   function addCategory() {
@@ -62,7 +59,6 @@ export default function App({ Component, pageProps }) {
     const newId = uid();
     newCategories[newId] = { id: newId, name: "Neu", color: "red" };
     setCategories(newCategories);
-    saveCategories(newCategories);
   }
 
   useEffect(() => {
@@ -81,7 +77,8 @@ export default function App({ Component, pageProps }) {
       const savedCategories = JSON.parse(
         localStorage.getItem("budgetBaerCategories")
       );
-      if (savedCategories === null) {
+      console.log("savedCategories", savedCategories);
+      if (!savedCategories) {
         setCategories(dataPrototype);
       } else {
         setCategories(savedCategories);
@@ -91,12 +88,20 @@ export default function App({ Component, pageProps }) {
     setIsLoaded(true);
   }, []);
 
+  useEffect(() => {
+    saveCategories();
+    function saveCategories() {
+      if (isLoaded) {
+        localStorage.setItem(
+          "budgetBaerCategories",
+          JSON.stringify(categories)
+        );
+      }
+    }
+  }, [categories]);
+
   function saveData(dataToSave) {
     localStorage.setItem("budgetBaerData", JSON.stringify(dataToSave));
-  }
-
-  function saveCategories(newCategories) {
-    localStorage.setItem("budgetBaerCategories", JSON.stringify(newCategories));
   }
 
   return (
@@ -113,7 +118,6 @@ export default function App({ Component, pageProps }) {
         deletCategory={deletCategory}
         addCategory={addCategory}
         changeCategoryColor={changeCategoryColor}
-        saveCategories={saveCategories}
       />
       <footer>
         <a href="/">

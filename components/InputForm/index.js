@@ -16,6 +16,10 @@ export default function InputForm({
     if (event.target.value <= 0 || event.target.value === "") {
       newInput[whichInputField].value = 0;
     } else {
+      if (!newInput[whichInputField]) {
+        newInput[whichInputField] = { value: 0, valueIst: 0 };
+      }
+
       newInput[whichInputField].value = parseInt(event.target.value, 10);
       event.target.value = parseInt(event.target.value, 10);
     }
@@ -26,6 +30,9 @@ export default function InputForm({
     if (event.target.value <= 0 || event.target.value === "") {
       newInput[whichInputField].valueIst = 0;
     } else {
+      if (!newInput[whichInputField]) {
+        newInput[whichInputField] = { value: 0, valueIst: 0 };
+      }
       newInput[whichInputField].valueIst = parseInt(event.target.value, 10);
       event.target.value = parseInt(event.target.value, 10);
     }
@@ -42,7 +49,7 @@ export default function InputForm({
         <p></p>
         <p>SOLL</p>
         <p></p>
-        {Object.entries(inputFields).map(([objectName, objectValue]) => {
+        {Object.entries(dataPrototype).map(([objectName, objectValue]) => {
           if (objectName === "total") {
             return;
           }
@@ -73,7 +80,7 @@ export default function InputForm({
         <p>IST</p>
         <p></p>
 
-        {Object.entries(inputFields).map(([objectName, objectValue]) => {
+        {Object.entries(dataPrototype).map(([objectName, objectValue]) => {
           if (objectName === "total") {
             return;
           }

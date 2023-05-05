@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import { useEffect, useState } from "react";
 import { uid } from "uid";
+import StyledButton from "@/components/button";
 
 const dataPrototype = {
   "9b51189fa12": {
@@ -114,6 +115,17 @@ export default function App({ Component, pageProps }) {
         changeCategoryColor={changeCategoryColor}
         saveCategories={saveCategories}
       />
+      <footer>
+        <a href="/">
+          <StyledButton>Main</StyledButton>
+        </a>
+        <a href="/rename">
+          <StyledButton>rename</StyledButton>
+        </a>
+        <a href="/expenses-graph">
+          <StyledButton>expenses-graph</StyledButton>
+        </a>
+      </footer>
     </>
   );
 }

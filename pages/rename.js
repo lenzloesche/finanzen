@@ -15,7 +15,7 @@ export default function Rename({
   changeCategoryColor,
 }) {
   const [categorySelected, setCategorySelected] = useState("");
-  const [color, setColor] = useState("ffffff");
+  const [color, setColor] = useState("#ffffff");
 
   function handleColorChange(event) {
     setColor(event.target.value);
@@ -23,12 +23,12 @@ export default function Rename({
 
   function handleSelectChange(event) {
     const selectedOption = event.target.value;
+
     setCategorySelected(selectedOption);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(event.target.elements.rename.value);
     const newName = event.target.elements.rename.value;
     changeCategoryName(categorySelected, newName);
     changeCategoryColor(categorySelected, color);

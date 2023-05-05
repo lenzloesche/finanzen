@@ -35,12 +35,13 @@ export default function App({ Component, pageProps }) {
   const [categories, setCategories] = useState(dataPrototype);
 
   function changeCategoryName(id, newName) {
-    const newCategories = categories.splice();
+    const newCategories = JSON.parse(JSON.stringify(categories));
     newCategories[id].name = newName;
+    setCategories(newCategories);
   }
 
   function deletCategory(id) {
-    const newCategories = categories.splice();
+    const newCategories = JSON.parse(JSON.stringify(categories));
     delete newCategories?.[id];
   }
 
@@ -67,10 +68,12 @@ export default function App({ Component, pageProps }) {
         {...pageProps}
         data={data}
         setData={setData}
-        dataPrototype={dataPrototype}
+        dataPrototype={categories}
         saveData={saveData}
         isLoaded={isLoaded}
         setIsLoaded={setIsLoaded}
+        changeCategoryName={changeCategoryName}
+        deletCategory={deletCategory}
       />
     </>
   );

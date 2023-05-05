@@ -1,7 +1,8 @@
 import StyledCalendar from "@/components/calendar";
 import { useState } from "react";
+import Linegraph from "@/components/charts/linegraph";
 
-export default function ExpensesGraph() {
+export default function ExpensesGraph({ data, dataPrototype }) {
   const [currentYear, setCurrentYear] = useState(2023);
 
   function handleMinusYear() {
@@ -11,10 +12,18 @@ export default function ExpensesGraph() {
     setCurrentYear(currentYear + 1);
   }
   return (
-    <StyledCalendar
-      handleMinus={handleMinusYear}
-      handlePlus={handlePlusYear}
-      current={currentYear}
-    />
+    <>
+      <h1>BÄRENGRAPH</h1>
+      <StyledCalendar
+        handleMinus={handleMinusYear}
+        handlePlus={handlePlusYear}
+        current={currentYear}
+      />
+      <Linegraph
+        data={data}
+        currentYear={currentYear}
+        dataPrototype={dataPrototype}
+      />
+    </>
   );
 }

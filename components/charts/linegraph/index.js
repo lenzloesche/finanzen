@@ -9,21 +9,7 @@ import {
   Line,
 } from "recharts";
 import { uid } from "uid";
-
-const months = [
-  "Januar",
-  "Februar",
-  "März",
-  "April",
-  "Mai",
-  "Juni",
-  "Juli",
-  "August",
-  "September",
-  "Oktober",
-  "November",
-  "Dezember",
-];
+import months from "@/utils/data/months";
 
 export default function Linegraph({ data, currentYear, dataPrototype }) {
   const [rechartsData, setRechartsData] = useState([]);
@@ -47,6 +33,7 @@ export default function Linegraph({ data, currentYear, dataPrototype }) {
             }
           }
         });
+        newMonth.name = months[month];
         newData.push(newMonth);
       }
       setRechartsData(newData);
@@ -56,7 +43,7 @@ export default function Linegraph({ data, currentYear, dataPrototype }) {
   return (
     <LineChart
       width={350}
-      height={250}
+      height={350}
       data={rechartsData}
       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
     >

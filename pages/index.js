@@ -6,6 +6,7 @@ import Image from "next/image";
 import Calendar from "@/components/calendar";
 import styled from "styled-components";
 import StyledFlexDiv from "@/components/FlexDiv";
+import months from "@/utils/data/months";
 
 const MyPieChart = dynamic(() => import("@/components/charts/piechart"), {
   ssr: false,
@@ -38,21 +39,6 @@ const startingInput = {
     valueIst: 0,
   },
 };
-
-const months = [
-  "Januar",
-  "Februar",
-  "März",
-  "April",
-  "Mai",
-  "Juni",
-  "Juli",
-  "August",
-  "September",
-  "Oktober",
-  "November",
-  "Dezember",
-];
 
 export default function Home({
   data,

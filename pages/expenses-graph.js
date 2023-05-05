@@ -1,6 +1,9 @@
 import StyledCalendar from "@/components/calendar";
 import { useState } from "react";
 import Linegraph from "@/components/charts/linegraph";
+import StyledFlexDiv from "@/components/FlexDiv";
+import Image from "next/image";
+import styled from "styled-components";
 
 export default function ExpensesGraph({ data, dataPrototype }) {
   const [currentYear, setCurrentYear] = useState(2023);
@@ -13,17 +16,30 @@ export default function ExpensesGraph({ data, dataPrototype }) {
   }
   return (
     <>
-      <h1>BÄRENGRAPH</h1>
-      <StyledCalendar
-        handleMinus={handleMinusYear}
-        handlePlus={handlePlusYear}
-        current={currentYear}
-      />
-      <Linegraph
-        data={data}
-        currentYear={currentYear}
-        dataPrototype={dataPrototype}
-      />
+      <StyledFlexDiv>
+        <Image
+          height="100"
+          width="100"
+          alt="budgedbaer"
+          src="/budget_baer.png"
+        ></Image>
+        <Heading1>BÄRENGRAPH</Heading1>
+        <StyledCalendar
+          handleMinus={handleMinusYear}
+          handlePlus={handlePlusYear}
+          current={currentYear}
+        />
+        <Linegraph
+          data={data}
+          currentYear={currentYear}
+          dataPrototype={dataPrototype}
+        />
+      </StyledFlexDiv>
     </>
   );
 }
+const Heading1 = styled.h1`
+  margin: 0;
+  padding: 0;
+  font-size: 36px;
+`;

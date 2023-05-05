@@ -32,6 +32,18 @@ const dataPrototype = {
 export default function App({ Component, pageProps }) {
   const [data, setData] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
+  const [categories, setCategories] = useState(dataPrototype);
+
+  function changeCategoryName(id, newName) {
+    const newCategories = categories.splice();
+    newCategories[id].name = newName;
+  }
+
+  function deletCategory(id) {
+    const newCategories = categories.splice();
+    delete newCategories?.[id];
+  }
+
   useEffect(() => {
     loadData();
     function loadData() {

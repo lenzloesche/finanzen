@@ -1,14 +1,7 @@
 import styled from "styled-components";
 import StyledButton from "../button";
 
-export default function StyledCalendar({
-  handleMinus,
-  handlePlus,
-  handleMinusMonth,
-  handlePlusMonth,
-  current,
-  currentMonth,
-}) {
+export default function StyledCalendar({ handleMinus, handlePlus, current }) {
   return (
     <>
       <StyledBanner>

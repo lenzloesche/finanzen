@@ -32,7 +32,6 @@ const dataPrototype = {
 export default function App({ Component, pageProps }) {
   const [data, setData] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
-
   useEffect(() => {
     loadData();
     function loadData() {

@@ -14,28 +14,41 @@ export default function Rename({
   addCategory,
   changeCategoryColor,
 }) {
-  const [categorySelected, setCategorySelected] = useState("");
+  const [categorySelected, setCategorySelected] = useState("Select");
   const [color, setColor] = useState("#ffffff");
+  const [rename, setRename] = useState("Select");
+
+  function handleRenameChange(event) {
+    setRename(event.target.value);
+  }
 
   function handleColorChange(event) {
-    setColor(event.target.value);
+    if (categorySelected !== "Select") {
+      setColor(event.target.value);
+      changeCategoryColor(categorySelected, event.target.value);
+    }
   }
 
   function handleSelectChange(event) {
     const selectedOption = event.target.value;
-
     setCategorySelected(selectedOption);
+    const colorOfSelectedOption = dataPrototype[selectedOption].color;
+    setColor(colorOfSelectedOption);
+    const nameOfSelectedOption = dataPrototype[selectedOption].name;
+    setRename(nameOfSelectedOption);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    const newName = event.target.elements.rename.value;
-    changeCategoryName(categorySelected, newName);
-    //changeCategoryColor(categorySelected, color);
+    if (categorySelected !== "Select") {
+      const newName = event.target.elements.rename.value;
+      changeCategoryName(categorySelected, newName);
+    }
   }
 
   function handleAddCategoryClick(event) {
-    addCategory();
+    const newId = addCategory();
+    setCategorySelected(newId);
   }
 
   function handleDeleteCategoryClick(event) {
@@ -65,6 +78,8 @@ export default function Rename({
               handleSelectChange(event);
             }}
           >
+            {" "}
+            <option value="Select">Select...</option>
             {Object.entries(dataPrototype).map((eachcategory) => {
               return (
                 <option key={uid()} value={eachcategory[0]}>
@@ -75,17 +90,24 @@ export default function Rename({
           </select>
           <label htmlFor="rename">
             Umbenennen:
-            <StyledInput id="rename"></StyledInput>
+            <StyledInput
+              id="rename"
+              value={rename}
+              onChange={(event) => {
+                handleRenameChange(event);
+              }}
+            ></StyledInput>
           </label>
-          <input
-            type="color"
-            value={color}
-            onChange={(event) => {
-              handleColorChange(event);
-            }}
-          />
+
           <StyledButton type="submit">Umbenennen</StyledButton>
         </StyledForm>
+        <input
+          type="color"
+          value={color}
+          onChange={(event) => {
+            handleColorChange(event);
+          }}
+        />
         <StyledButton
           onClick={(event) => {
             handleAddCategoryClick(event);

@@ -59,6 +59,7 @@ export default function App({ Component, pageProps }) {
     const newId = uid();
     newCategories[newId] = { id: newId, name: "Neu", color: "red" };
     setCategories(newCategories);
+    return newId;
   }
 
   useEffect(() => {
@@ -77,7 +78,6 @@ export default function App({ Component, pageProps }) {
       const savedCategories = JSON.parse(
         localStorage.getItem("budgetBaerCategories")
       );
-      console.log("savedCategories", savedCategories);
       if (!savedCategories) {
         setCategories(dataPrototype);
       } else {

@@ -1,5 +1,3 @@
-import StyledForm from "@/components/InputForm/Form";
-import StyledInput from "@/components/InputForm/Input";
 import StyledButton from "@/components/button";
 import { useState } from "react";
 import StyledFlexDiv from "@/components/FlexDiv";
@@ -32,10 +30,14 @@ export default function Rename({
   function handleSelectChange(event) {
     const selectedOption = event.target.value;
     setCategorySelected(selectedOption);
-    const colorOfSelectedOption = dataPrototype[selectedOption].color;
-    setColor(colorOfSelectedOption);
-    const nameOfSelectedOption = dataPrototype[selectedOption].name;
-    setRename(nameOfSelectedOption);
+    if (selectedOption === "Select") {
+      setRename("Select");
+    } else {
+      const colorOfSelectedOption = dataPrototype[selectedOption].color;
+      setColor(colorOfSelectedOption);
+      const nameOfSelectedOption = dataPrototype[selectedOption].name;
+      setRename(nameOfSelectedOption);
+    }
   }
 
   function handleSubmit(event) {
@@ -65,11 +67,12 @@ export default function Rename({
           src="/budget_baer.png"
         ></Image>
         <Heading1>BÄRENÄNDERUNG</Heading1>
-        <StyledForm
+        <form
           onSubmit={(event) => {
             handleSubmit(event);
           }}
         >
+          {" "}
           <select
             name="categories"
             id="categories"
@@ -78,7 +81,6 @@ export default function Rename({
               handleSelectChange(event);
             }}
           >
-            {" "}
             <option value="Select">Select...</option>
             {Object.entries(dataPrototype).map((eachcategory) => {
               return (
@@ -88,19 +90,19 @@ export default function Rename({
               );
             })}
           </select>
+          <br />
           <label htmlFor="rename">
             Umbenennen:
-            <StyledInput
+            <input
               id="rename"
               value={rename}
               onChange={(event) => {
                 handleRenameChange(event);
               }}
-            ></StyledInput>
+            ></input>
           </label>
-
           <StyledButton type="submit">Umbenennen</StyledButton>
-        </StyledForm>
+        </form>
         <input
           type="color"
           value={color}
@@ -108,19 +110,21 @@ export default function Rename({
             handleColorChange(event);
           }}
         />
-        <StyledButton
-          onClick={(event) => {
-            handleAddCategoryClick(event);
-          }}
-        >
-          +
-        </StyledButton>
+        <br />
         <StyledButton
           onClick={(event) => {
             handleDeleteCategoryClick(event);
           }}
         >
-          -
+          Kategorie Löschen
+        </StyledButton>
+        <br />
+        <StyledButton
+          onClick={(event) => {
+            handleAddCategoryClick(event);
+          }}
+        >
+          Kategorie hinzufügen
         </StyledButton>
       </StyledFlexDiv>
     </>

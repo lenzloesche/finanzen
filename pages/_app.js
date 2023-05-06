@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import { useEffect, useState } from "react";
 import { uid } from "uid";
 import StyledButton from "@/components/button";
+import StyledFooter from "@/components/footer";
 
 const dataPrototype = {
   "9b51189fa12": {
@@ -68,7 +69,7 @@ export default function App({ Component, pageProps }) {
   );
 
   function clearInputFields(newData) {
-    const changeNewData = { ...newData };
+    const changeNewData = JSON.parse(JSON.stringify(newData));
     Object.entries(categories).forEach(([elementId, elementValue]) => {
       if (!changeNewData[elementId]) {
         changeNewData[elementId] = {
@@ -180,17 +181,17 @@ export default function App({ Component, pageProps }) {
         setInputFields={setInputFields}
         addInputField={addInputField}
       />
-      <footer>
+      <StyledFooter>
         <a href="/">
-          <StyledButton>Main</StyledButton>
+          <StyledButton>Start</StyledButton>
         </a>
         <a href="/rename">
-          <StyledButton>rename</StyledButton>
+          <StyledButton>Kategorien</StyledButton>
         </a>
         <a href="/expenses-graph">
-          <StyledButton>expenses-graph</StyledButton>
+          <StyledButton>Graphen</StyledButton>
         </a>
-      </footer>
+      </StyledFooter>
     </>
   );
 }

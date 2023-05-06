@@ -61,13 +61,13 @@ export default function Home({
   saveData,
   isLoaded,
   setIsLoaded,
+  inputFields,
+  setInputFields,
+  clearInputFields,
 }) {
   const [currentYear, setCurrentYear] = useState(2023);
   const [currentMonth, setCurrentMonth] = useState(0);
   const [currentData, setCurrentData] = useState([]);
-  const [inputFields, setInputFields] = useState(
-    JSON.parse(JSON.stringify(startingInput))
-  );
 
   useEffect(() => {
     if (isLoaded === true) {
@@ -82,10 +82,6 @@ export default function Home({
       [id]: { isOn: !editModeForInputOn[id].isOn },
     };
     setEditModeForInputOn(newEditModeForInputOn);
-  }
-
-  function clearInputFields(newData) {
-    setInputFields(newData);
   }
 
   function calculateSum(arrayOfNumbers) {

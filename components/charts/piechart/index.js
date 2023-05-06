@@ -36,15 +36,7 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
       let howManyNonZeros = 0;
       const newArray = Object.entries(dataPrototype).map(
         ([objectId, objectValue]) => {
-          console.log(
-            "objectId",
-            objectId,
-            "objectValue",
-            objectValue,
-            "data",
-            data
-          );
-          const valueSoll = data[objectId].value;
+          const valueSoll = data?.[objectId]?.value;
           if (valueSoll) {
             howManyNonZeros += Number(valueSoll);
           }
@@ -72,7 +64,7 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
       let howManyNonZeros = 0;
       const newArray = Object.entries(dataPrototype).map(
         ([objectId, objectValue]) => {
-          const valueIst = data[objectId].valueIst;
+          const valueIst = data?.[objectId]?.valueIst;
           if (valueIst) {
             howManyNonZeros += Number(valueIst);
           }

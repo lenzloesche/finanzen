@@ -115,7 +115,26 @@ export default function Home({
       currentMonth
     );
 
-    const arrayofNumbers = Object.entries(newData).map(([key, value]) => {
+    const arrayofNumbers = Object.entries(dataPrototype).map(([key, value]) => {
+      if (newData[key]) {
+        return newData[key].value;
+      } else {
+        return 0;
+      }
+    });
+    newData["total"]["valueSum"] = calculateSum(arrayofNumbers);
+    const arrayofNumbersIst = Object.entries(dataPrototype).map(
+      ([key, value]) => {
+        if (newData[key]) {
+          return newData[key].valueIst;
+        } else {
+          return 0;
+        }
+      }
+    );
+    newData["total"]["valueSumIst"] = calculateSum(arrayofNumbersIst);
+
+    /*     const arrayofNumbers = Object.entries(newData).map(([key, value]) => {
       if (key != "total") {
         return value.value;
       } else {
@@ -130,9 +149,11 @@ export default function Home({
         return 0;
       }
     });
-    newData["total"]["valueSumIst"] = calculateSum(arrayofNumbersIst);
+    newData["total"]["valueSumIst"] = calculateSum(arrayofNumbersIst); */
+
     newData["total"].difference =
       newData["total"]["valueSumIst"] - newData["total"]["valueSum"];
+
     newFullData[currentYear][currentMonth] = newData;
     setData(newFullData);
     setCurrentData(newData);
@@ -201,7 +222,7 @@ export default function Home({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <StyledMain>
         <StyledFlexDiv>
           <Image
             height="100"
@@ -233,10 +254,14 @@ export default function Home({
             valueSumIst={currentData.total?.valueSumIst}
           />{" "}
         </StyledFlexDiv>
-      </main>
+      </StyledMain>
     </>
   );
 }
+
+const StyledMain = styled.main`
+  margin-bottom: 60px;
+`;
 
 const Heading1 = styled.h1`
   margin: 0;

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { uid } from "uid";
 import StyledButton from "@/components/button";
 import StyledFooter from "@/components/footer";
+import Link from "next/link";
 
 const dataPrototype = {
   "9b51189fa12": {
@@ -182,15 +183,15 @@ export default function App({ Component, pageProps }) {
         addInputField={addInputField}
       />
       <StyledFooter>
-        <a href="/">
+        <Link href="/">
           <StyledButton>Start</StyledButton>
-        </a>
-        <a href="/rename">
+        </Link>
+        <Link href="/rename">
           <StyledButton>Kategorien</StyledButton>
-        </a>
-        <a href="/expenses-graph">
+        </Link>
+        <Link href="/expenses-graph">
           <StyledButton>Graphen</StyledButton>
-        </a>
+        </Link>
       </StyledFooter>
     </>
   );

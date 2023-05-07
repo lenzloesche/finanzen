@@ -50,9 +50,6 @@ export default function InputForm({
         <p>SOLL</p>
         <p></p>
         {Object.entries(dataPrototype).map(([objectName, objectValue]) => {
-          if (objectName === "total") {
-            return;
-          }
           return (
             <React.Fragment key={objectName}>
               <label htmlFor={objectName} key={objectName}>
@@ -62,7 +59,7 @@ export default function InputForm({
                 min="0"
                 id={objectName}
                 type="number"
-                value={objectValue.value}
+                value={inputFields[objectName].value}
                 onChange={(event) => {
                   handleChange(event, objectName);
                   handleSubmit(event);
@@ -81,9 +78,6 @@ export default function InputForm({
         <p></p>
 
         {Object.entries(dataPrototype).map(([objectName, objectValue]) => {
-          if (objectName === "total") {
-            return;
-          }
           return (
             <React.Fragment key={objectName}>
               <label htmlFor={`${objectName}Ist`} key={`${objectName}Ist`}>
@@ -93,7 +87,7 @@ export default function InputForm({
                 min="0"
                 id={`${objectName}Ist`}
                 type="number"
-                value={objectValue.valueIst}
+                value={inputFields[objectName].valueIst}
                 onChange={(event) => {
                   handleChangeIst(event, objectName);
                   handleSubmit(event);

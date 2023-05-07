@@ -13,22 +13,22 @@ const dataPrototype = {
   b51189fa126: {
     id: "b51189fa126",
     name: "Miete",
-    color: "blue",
+    color: "#001DFF",
   },
   "51189fa126b": {
     id: "51189fa126b",
     name: "Spaß",
-    color: "red",
+    color: "#FF0C00",
   },
   "1189fa126b6": {
     id: "1189fa126b6",
-    name: "Kinder",
-    color: "green",
+    name: "Sonstiges",
+    color: "#00FF19",
   },
   be90e393b31: {
     id: "be90e393b31",
     name: "Sparen",
-    color: "violet",
+    color: "#FA00FF",
   },
 };
 const startingInput = {

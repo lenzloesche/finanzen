@@ -73,12 +73,14 @@ export default function Rename({
           src="/budget_baer.png"
         ></Image>
         <Heading1>BÄRENÄNDERUNG</Heading1>
-        <form
+        <StyledFormVertical
           onSubmit={(event) => {
             handleSubmit(event);
           }}
         >
-          {" "}
+          <br />
+          <h2>Kategorie wählen, um sie zu ändern.</h2>
+
           <select
             name="categories"
             id="categories"
@@ -87,7 +89,7 @@ export default function Rename({
               handleSelectChange(event);
             }}
           >
-            <option value="Select">Select...</option>
+            <option value="Select">Kategorie wählen</option>
             {Object.entries(dataPrototype).map((eachcategory) => {
               return (
                 <option key={uid()} value={eachcategory[0]}>
@@ -97,18 +99,16 @@ export default function Rename({
             })}
           </select>
           <br />
-          <label htmlFor="rename">
-            Umbenennen:
-            <input
-              id="rename"
-              value={rename}
-              onChange={(event) => {
-                handleRenameChange(event);
-              }}
-            ></input>
-          </label>
+          <label htmlFor="rename">Hier den neuen Namen eintragen::</label>
+          <input
+            id="rename"
+            value={rename}
+            onChange={(event) => {
+              handleRenameChange(event);
+            }}
+          ></input>
           <StyledButton type="submit">Umbenennen</StyledButton>
-        </form>
+        </StyledFormVertical>
         <input
           type="color"
           value={color}
@@ -130,12 +130,17 @@ export default function Rename({
             handleAddCategoryClick(event);
           }}
         >
-          Kategorie hinzufügen
+          Neue Kategorie hinzufügen
         </StyledButton>
       </StyledFlexDiv>
     </>
   );
 }
+
+const StyledFormVertical = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
 
 const Heading1 = styled.h1`
   margin: 0;

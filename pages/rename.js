@@ -6,13 +6,7 @@ import { uid } from "uid";
 import styled from "styled-components";
 import Head from "next/head";
 
-export default function Rename({
-  dataPrototype,
-  changeCategoryName,
-  deletCategory,
-  addCategory,
-  changeCategoryColor,
-}) {
+export default function Rename({ dataPrototype, changeCategoryName, deletCategory, addCategory, changeCategoryColor }) {
   const [categorySelected, setCategorySelected] = useState("Select");
   const [color, setColor] = useState("#ffffff");
   const [rename, setRename] = useState("Select");
@@ -66,12 +60,7 @@ export default function Rename({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <StyledFlexDiv>
-        <Image
-          height="100"
-          width="100"
-          alt="budgedbaer"
-          src="/budget_baer.png"
-        ></Image>
+        <Image height="100" width="100" alt="budgedbaer" src="/budget_baer.png"></Image>
         <Heading1>BÄRENÄNDERUNG</Heading1>
         <StyledFormVertical
           onSubmit={(event) => {
@@ -99,31 +88,46 @@ export default function Rename({
             })}
           </select>
           <br />
-          <label htmlFor="rename">Hier den neuen Namen eintragen::</label>
-          <input
-            id="rename"
-            value={rename}
-            onChange={(event) => {
-              handleRenameChange(event);
-            }}
-          ></input>
-          <StyledButton type="submit">Umbenennen</StyledButton>
+          {categorySelected === "Select" ? (
+            ""
+          ) : (
+            <>
+              {" "}
+              <label htmlFor="rename">Hier den neuen Namen eintragen::</label>
+              <input
+                id="rename"
+                value={rename}
+                onChange={(event) => {
+                  handleRenameChange(event);
+                }}
+              ></input>
+              <StyledButton type="submit">Umbenennen</StyledButton>
+            </>
+          )}
         </StyledFormVertical>
-        <input
-          type="color"
-          value={color}
-          onChange={(event) => {
-            handleColorChange(event);
-          }}
-        />
-        <br />
-        <StyledButton
-          onClick={(event) => {
-            handleDeleteCategoryClick(event);
-          }}
-        >
-          Kategorie Löschen
-        </StyledButton>
+        {categorySelected === "Select" ? (
+          ""
+        ) : (
+          <>
+            {" "}
+            <input
+              type="color"
+              value={color}
+              onChange={(event) => {
+                handleColorChange(event);
+              }}
+            />
+            <br />
+            <StyledButton
+              onClick={(event) => {
+                handleDeleteCategoryClick(event);
+              }}
+            >
+              Kategorie Löschen
+            </StyledButton>
+          </>
+        )}
+
         <br />
         <StyledButton
           onClick={(event) => {

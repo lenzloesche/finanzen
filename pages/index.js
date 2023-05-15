@@ -13,8 +13,19 @@ const MyPieChart = dynamic(() => import("@/components/charts/piechart"), {
   ssr: false,
 });
 
-export default function Home({ data, setData, dataPrototype, saveData, isLoaded, setIsLoaded, inputFields, setInputFields, clearInputFields }) {
-  const [currentYear, setCurrentYear] = useState(2023);
+export default function Home({
+  data,
+  setData,
+  dataPrototype,
+  saveData,
+  isLoaded,
+  setIsLoaded,
+  inputFields,
+  setInputFields,
+  clearInputFields,
+  currentYear,
+  setCurrentYear,
+}) {
   const [currentMonth, setCurrentMonth] = useState(0);
   const [currentData, setCurrentData] = useState([]);
 

@@ -63,11 +63,10 @@ const startingInput = {
 
 export default function App({ Component, pageProps }) {
   const [data, setData] = useState({});
+  const [currentYear, setCurrentYear] = useState(2023);
   const [categories, setCategories] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
-  const [inputFields, setInputFields] = useState(
-    JSON.parse(JSON.stringify(startingInput))
-  );
+  const [inputFields, setInputFields] = useState(JSON.parse(JSON.stringify(startingInput)));
 
   function clearInputFields(newData) {
     const changeNewData = JSON.parse(JSON.stringify(newData));
@@ -131,9 +130,7 @@ export default function App({ Component, pageProps }) {
 
     loadCategories();
     function loadCategories() {
-      const savedCategories = JSON.parse(
-        localStorage.getItem("budgetBaerCategories")
-      );
+      const savedCategories = JSON.parse(localStorage.getItem("budgetBaerCategories"));
       if (!savedCategories) {
         setCategories(dataPrototype);
       } else {
@@ -151,10 +148,7 @@ export default function App({ Component, pageProps }) {
     saveCategories();
     function saveCategories() {
       if (isLoaded) {
-        localStorage.setItem(
-          "budgetBaerCategories",
-          JSON.stringify(categories)
-        );
+        localStorage.setItem("budgetBaerCategories", JSON.stringify(categories));
       }
     }
   }, [categories]);
@@ -181,6 +175,8 @@ export default function App({ Component, pageProps }) {
         clearInputFields={clearInputFields}
         setInputFields={setInputFields}
         addInputField={addInputField}
+        currentYear={currentYear}
+        setCurrentYear={setCurrentYear}
       />
       <StyledFooter>
         <Link href="/">

@@ -5,25 +5,20 @@ export default function StyledCalendar({ handleMinus, handlePlus, current }) {
   return (
     <>
       <StyledBanner>
-        <StyledButton onClick={handleMinus}>-</StyledButton>{" "}
-        <StyledHeading2>{current}</StyledHeading2>{" "}
-        <StyledButton onClick={handlePlus}>+</StyledButton>
+        <StyledButton onClick={handleMinus}>-</StyledButton> <StyledHeading2>{current}</StyledHeading2> <StyledButton onClick={handlePlus}>+</StyledButton>
       </StyledBanner>
     </>
   );
 }
 
 const StyledHeading2 = styled.h2`
+  text-align: center;
+  width: 130px;
   margin: 0;
   padding: 0;
   font-size: 30px;
 `;
 
-const StyledHeading3 = styled.h3`
-  margin: 0;
-  padding: 0;
-  font-size: 26px;
-`;
 const StyledBanner = styled.div`
   display: grid;
   width: 300px;

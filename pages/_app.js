@@ -139,27 +139,20 @@ export default function App({ Component, pageProps }) {
         setCategories(dataPrototype);
       } else {
         setCategories(savedCategories);
+        const newInputFields = { ...inputFields };
         Object.entries(savedCategories).forEach(([elementId, elementValue]) => {
-          addInputField(elementId);
+          console.log("elementId", elementId);
+          newInputFields[elementId] = {
+            value: 0,
+            valueIst: 0,
+          };
+          setInputFields(newInputFields);
         });
       }
     }
 
     setIsLoaded(true);
   }, []);
-  /* 
-  useEffect(() => {
-    console.log("useeffect");
-    saveCategories();
-    function saveCategories() {
-      console.log("saveCategories");
-
-      if (isLoaded) {
-        console.log("isLoaded");
-        localStorage.setItem("budgetBaerCategories", JSON.stringify(categories));
-      }
-    }
-  }, [categories]); */
 
   function saveCategories(categoryToSave) {
     console.log("saveCategories");

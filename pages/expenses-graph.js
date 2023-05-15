@@ -1,5 +1,4 @@
 import StyledCalendar from "@/components/calendar";
-import { useState } from "react";
 import Linegraph from "@/components/charts/linegraph";
 import StyledFlexDiv from "@/components/FlexDiv";
 import Image from "next/image";

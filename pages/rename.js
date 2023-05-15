@@ -46,10 +46,14 @@ export default function Rename({ dataPrototype, changeCategoryName, deletCategor
   function handleAddCategoryClick(event) {
     const newId = addCategory();
     setCategorySelected(newId);
+    setColor("#ffffff");
+    setRename("Neu");
   }
 
   function handleDeleteCategoryClick(event) {
     deletCategory(categorySelected);
+    setCategorySelected("Select");
+    setRename("Select");
   }
   return (
     <>

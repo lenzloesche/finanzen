@@ -7,53 +7,21 @@ import Calendar from "@/components/calendar";
 import styled from "styled-components";
 import StyledFlexDiv from "@/components/FlexDiv";
 import months from "@/utils/data/months";
+import startingInput from "@/utils/data/starting-input";
 
 const MyPieChart = dynamic(() => import("@/components/charts/piechart"), {
   ssr: false,
 });
-const startingInput = {
-  total: {
-    valueSum: 0,
-    valueSumIst: 0,
-    difference: 0,
-  },
 
-  "9b51189fa12": {
-    value: 0,
-    valueIst: 0,
-  },
-  b51189fa126: {
-    value: 0,
-    valueIst: 0,
-  },
-  "51189fa126b": {
-    value: 0,
-    valueIst: 0,
-  },
-  "1189fa126b6": {
-    value: 0,
-    valueIst: 0,
-  },
-  be90e393b31: {
-    value: 0,
-    valueIst: 0,
-  },
-};
-
-export default function Home({
-  data,
-  setData,
-  dataPrototype,
-  saveData,
-  isLoaded,
-  setIsLoaded,
-  inputFields,
-  setInputFields,
-  clearInputFields,
-}) {
+export default function Home({ data, setData, dataPrototype, saveData, isLoaded, setIsLoaded, inputFields, setInputFields, clearInputFields }) {
   const [currentYear, setCurrentYear] = useState(2023);
   const [currentMonth, setCurrentMonth] = useState(0);
   const [currentData, setCurrentData] = useState([]);
+
+  useEffect(() => {
+    switchDates(currentYear, currentMonth);
+    setIsLoaded(true);
+  }, []);
 
   useEffect(() => {
     if (isLoaded === true) {
@@ -75,9 +43,7 @@ export default function Home({
 
     let newData = { total: { valueSum: 0, valueSumIst: 0, difference: 0 } };
 
-    const arrayOfInputFields = Object.entries(dataPrototype).map(
-      ([key, value]) => ({ key, value })
-    );
+    const arrayOfInputFields = Object.entries(dataPrototype).map(([key, value]) => ({ key, value }));
 
     for (let i = 0; i < arrayOfInputFields.length; i++) {
       const newObject = {
@@ -87,11 +53,7 @@ export default function Home({
       const idOfInputField = arrayOfInputFields[i].key;
       newData = { ...newData, [idOfInputField]: { ...newObject } };
     }
-    let newFullData = createYearAndMonth(
-      { ...data },
-      currentYear,
-      currentMonth
-    );
+    let newFullData = createYearAndMonth({ ...data }, currentYear, currentMonth);
 
     const arrayofNumbers = Object.entries(dataPrototype).map(([key, value]) => {
       if (newData[key]) {
@@ -101,18 +63,15 @@ export default function Home({
       }
     });
     newData["total"]["valueSum"] = calculateSum(arrayofNumbers);
-    const arrayofNumbersIst = Object.entries(dataPrototype).map(
-      ([key, value]) => {
-        if (newData[key]) {
-          return newData[key].valueIst;
-        } else {
-          return 0;
-        }
+    const arrayofNumbersIst = Object.entries(dataPrototype).map(([key, value]) => {
+      if (newData[key]) {
+        return newData[key].valueIst;
+      } else {
+        return 0;
       }
-    );
+    });
     newData["total"]["valueSumIst"] = calculateSum(arrayofNumbersIst);
-    newData["total"].difference =
-      newData["total"]["valueSumIst"] - newData["total"]["valueSum"];
+    newData["total"].difference = newData["total"]["valueSumIst"] - newData["total"]["valueSum"];
 
     newFullData[currentYear][currentMonth] = newData;
     setData(newFullData);
@@ -121,11 +80,7 @@ export default function Home({
   }
 
   function switchDates(switchToYear, switchToMonth) {
-    const newFullData = createYearAndMonth(
-      { ...data },
-      switchToYear,
-      switchToMonth
-    );
+    const newFullData = createYearAndMonth({ ...data }, switchToYear, switchToMonth);
     const newData = { ...newFullData[switchToYear][switchToMonth] };
     setData(newFullData);
     setCurrentData(newData);
@@ -138,9 +93,7 @@ export default function Home({
       fullDataCopy[yearToCreate] = {};
     }
     if (!fullDataCopy[yearToCreate][monthToCreate]) {
-      fullDataCopy[yearToCreate][monthToCreate] = JSON.parse(
-        JSON.stringify(startingInput)
-      );
+      fullDataCopy[yearToCreate][monthToCreate] = JSON.parse(JSON.stringify(startingInput));
     }
     return fullDataCopy;
   }
@@ -184,28 +137,11 @@ export default function Home({
       </Head>
       <StyledMain>
         <StyledFlexDiv>
-          <Image
-            height="100"
-            width="100"
-            alt="budgedbaer"
-            src="/budget_baer.png"
-          ></Image>
+          <Image height="100" width="100" alt="budgedbaer" src="/budget_baer.png"></Image>
           <Heading1>BÄRENÜBERSICHT</Heading1>
-          <Calendar
-            handleMinus={handleMinusYear}
-            handlePlus={handlePlusYear}
-            current={currentYear}
-          />
-          <Calendar
-            handleMinus={handleMinusMonth}
-            handlePlus={handlePlusMonth}
-            current={months[currentMonth]}
-          />
-          <MyPieChart
-            data={currentData}
-            dataPrototype={dataPrototype}
-            difference={currentData.total?.difference}
-          ></MyPieChart>
+          <Calendar handleMinus={handleMinusYear} handlePlus={handlePlusYear} current={currentYear} />
+          <Calendar handleMinus={handleMinusMonth} handlePlus={handlePlusMonth} current={months[currentMonth]} />
+          <MyPieChart data={currentData} dataPrototype={dataPrototype} difference={currentData.total?.difference}></MyPieChart>
           <InputForm
             handleSubmit={handleSubmit}
             inputFields={inputFields}

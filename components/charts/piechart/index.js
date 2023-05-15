@@ -34,6 +34,74 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
     convertDataObjectToArrayIst();
     function convertDataObjectToArray() {
       let howManyNonZeros = 0;
+      const newArray = Object.entries(dataPrototype).map(
+        ([objectId, objectValue]) => {
+          const valueSoll = data?.[objectId]?.value;
+          if (valueSoll) {
+            howManyNonZeros += Number(valueSoll);
+          }
+          return {
+            name: objectValue.name,
+            color: objectValue.color,
+            value: valueSoll,
+          };
+        }
+      );
+      newArray.push({
+        name: "",
+        color: "#efefef",
+        value: ueberschuss,
+      });
+
+      if (howManyNonZeros > 0) {
+        setDrawBear(true);
+      } else {
+        setDrawBear(false);
+      }
+      setDataArray(newArray);
+    }
+    function convertDataObjectToArrayIst() {
+      let howManyNonZeros = 0;
+      const newArray = Object.entries(dataPrototype).map(
+        ([objectId, objectValue]) => {
+          const valueIst = data?.[objectId]?.valueIst;
+          if (valueIst) {
+            howManyNonZeros += Number(valueIst);
+          }
+          return {
+            name: objectValue.name,
+            color: objectValue.color,
+            value: valueIst,
+          };
+        }
+      );
+      newArray.push({
+        name: "",
+        color: "#efefef",
+        value: ueberschussIst,
+      });
+      if (howManyNonZeros > 0) {
+        setDrawBearIst(true);
+      } else {
+        setDrawBearIst(false);
+      }
+      setDataArrayIst(newArray);
+    }
+  }, [data]);
+
+  /* useEffect(() => {
+    let ueberschuss = 0;
+    let ueberschussIst = 0;
+    if (difference >= 0) {
+      ueberschuss = difference;
+    } else {
+      ueberschussIst = -difference;
+    }
+
+    convertDataObjectToArray();
+    convertDataObjectToArrayIst();
+    function convertDataObjectToArray() {
+      let howManyNonZeros = 0;
       const newArray = Object.entries(data).map(([objectName, objectValue]) => {
         if (objectValue.value) {
           howManyNonZeros += Number(objectValue.value);
@@ -83,7 +151,7 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
       }
       setDataArrayIst(newArray);
     }
-  }, [data]);
+  }, [data]); */
 
   return (
     <StyledContainerDiv drawBear={drawBear} drawBearIst={drawBearIst}>

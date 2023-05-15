@@ -16,6 +16,10 @@ export default function InputForm({
     if (event.target.value <= 0 || event.target.value === "") {
       newInput[whichInputField].value = 0;
     } else {
+      if (!newInput[whichInputField]) {
+        newInput[whichInputField] = { value: 0, valueIst: 0 };
+      }
+
       newInput[whichInputField].value = parseInt(event.target.value, 10);
       event.target.value = parseInt(event.target.value, 10);
     }
@@ -26,6 +30,9 @@ export default function InputForm({
     if (event.target.value <= 0 || event.target.value === "") {
       newInput[whichInputField].valueIst = 0;
     } else {
+      if (!newInput[whichInputField]) {
+        newInput[whichInputField] = { value: 0, valueIst: 0 };
+      }
       newInput[whichInputField].valueIst = parseInt(event.target.value, 10);
       event.target.value = parseInt(event.target.value, 10);
     }
@@ -42,10 +49,7 @@ export default function InputForm({
         <p></p>
         <p>SOLL</p>
         <p></p>
-        {Object.entries(inputFields).map(([objectName, objectValue]) => {
-          if (objectName === "total") {
-            return;
-          }
+        {Object.entries(dataPrototype).map(([objectName, objectValue]) => {
           return (
             <React.Fragment key={objectName}>
               <label htmlFor={objectName} key={objectName}>
@@ -55,7 +59,7 @@ export default function InputForm({
                 min="0"
                 id={objectName}
                 type="number"
-                value={objectValue.value}
+                value={inputFields[objectName].value}
                 onChange={(event) => {
                   handleChange(event, objectName);
                   handleSubmit(event);
@@ -73,10 +77,7 @@ export default function InputForm({
         <p>IST</p>
         <p></p>
 
-        {Object.entries(inputFields).map(([objectName, objectValue]) => {
-          if (objectName === "total") {
-            return;
-          }
+        {Object.entries(dataPrototype).map(([objectName, objectValue]) => {
           return (
             <React.Fragment key={objectName}>
               <label htmlFor={`${objectName}Ist`} key={`${objectName}Ist`}>
@@ -86,7 +87,7 @@ export default function InputForm({
                 min="0"
                 id={`${objectName}Ist`}
                 type="number"
-                value={objectValue.valueIst}
+                value={inputFields[objectName].valueIst}
                 onChange={(event) => {
                   handleChangeIst(event, objectName);
                   handleSubmit(event);

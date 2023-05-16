@@ -58,6 +58,7 @@ export default function Home({
       newData = { ...newData, [idOfInputField]: { ...newObject } };
     }
     let newFullData = createYearAndMonth({ ...data }, currentYear, currentMonth);
+    newFullData[currentYear][currentMonth] = newData;
 
     setData(newFullData);
     setCurrentData(newData);

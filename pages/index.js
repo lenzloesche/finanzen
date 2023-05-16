@@ -8,7 +8,7 @@ import styled from "styled-components";
 import StyledFlexDiv from "@/components/FlexDiv";
 import months from "@/utils/data/months";
 import startingInput from "@/utils/data/starting-input";
-import getDataWithValueSum from "@/helperfunctions/getDataWithValueSum";
+import { getValueSum, getValueSumIst } from "@/helperfunctions/getValueSum";
 
 const MyPieChart = dynamic(() => import("@/components/charts/piechart"), {
   ssr: false,
@@ -45,7 +45,7 @@ export default function Home({
   function handleSubmit(event) {
     event.preventDefault();
 
-    let newData = { total: { valueSum: 0, valueSumIst: 0, difference: 0 } };
+    let newData = {};
 
     const arrayOfInputFields = Object.entries(dataPrototype).map(([key, value]) => ({ key, value }));
 
@@ -58,8 +58,6 @@ export default function Home({
       newData = { ...newData, [idOfInputField]: { ...newObject } };
     }
     let newFullData = createYearAndMonth({ ...data }, currentYear, currentMonth);
-
-    newFullData[currentYear][currentMonth] = getDataWithValueSum(newData, dataPrototype);
 
     setData(newFullData);
     setCurrentData(newData);
@@ -128,14 +126,14 @@ export default function Home({
           <Heading1>BÄRENÜBERSICHT</Heading1>
           <Calendar handleMinus={handleMinusYear} handlePlus={handlePlusYear} current={currentYear} />
           <Calendar handleMinus={handleMinusMonth} handlePlus={handlePlusMonth} current={months[currentMonth]} />
-          <MyPieChart data={currentData} dataPrototype={dataPrototype} difference={currentData.total?.difference}></MyPieChart>
+          <MyPieChart data={currentData} dataPrototype={dataPrototype} difference={getValueSumIst(currentData) - getValueSum(currentData)}></MyPieChart>
           <InputForm
             handleSubmit={handleSubmit}
             inputFields={inputFields}
             setInputFields={setInputFields}
             dataPrototype={dataPrototype}
-            valueSum={currentData.total?.valueSum}
-            valueSumIst={currentData.total?.valueSumIst}
+            valueSum={getValueSum(currentData)}
+            valueSumIst={getValueSumIst(currentData)}
           />{" "}
         </StyledFlexDiv>
       </StyledMain>

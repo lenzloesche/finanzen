@@ -1,10 +1,4 @@
 const startingInput = {
-  total: {
-    valueSum: 0,
-    valueSumIst: 0,
-    difference: 0,
-  },
-
   "9b51189fa12": {
     value: 0,
     valueIst: 0,

@@ -141,7 +141,6 @@ export default function App({ Component, pageProps }) {
         setCategories(savedCategories);
         const newInputFields = { ...inputFields };
         Object.entries(savedCategories).forEach(([elementId, elementValue]) => {
-          console.log("elementId", elementId);
           newInputFields[elementId] = {
             value: 0,
             valueIst: 0,
@@ -155,7 +154,6 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   function saveCategories(categoryToSave) {
-    console.log("saveCategories");
     localStorage.setItem("budgetBaerCategories", JSON.stringify(categoryToSave));
   }
 

@@ -8,6 +8,7 @@ import styled from "styled-components";
 import StyledFlexDiv from "@/components/FlexDiv";
 import months from "@/utils/data/months";
 import startingInput from "@/utils/data/starting-input";
+import getDataWithValueSum from "@/helperfunctions/getDataWithValueSum";
 
 const MyPieChart = dynamic(() => import("@/components/charts/piechart"), {
   ssr: false,
@@ -41,14 +42,6 @@ export default function Home({
     }
   }, [data]);
 
-  function calculateSum(arrayOfNumbers) {
-    let countSum = 0;
-    for (const number of arrayOfNumbers) {
-      countSum += number;
-    }
-    return countSum;
-  }
-
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -66,25 +59,8 @@ export default function Home({
     }
     let newFullData = createYearAndMonth({ ...data }, currentYear, currentMonth);
 
-    const arrayofNumbers = Object.entries(dataPrototype).map(([key, value]) => {
-      if (newData[key]) {
-        return newData[key].value;
-      } else {
-        return 0;
-      }
-    });
-    newData["total"]["valueSum"] = calculateSum(arrayofNumbers);
-    const arrayofNumbersIst = Object.entries(dataPrototype).map(([key, value]) => {
-      if (newData[key]) {
-        return newData[key].valueIst;
-      } else {
-        return 0;
-      }
-    });
-    newData["total"]["valueSumIst"] = calculateSum(arrayofNumbersIst);
-    newData["total"].difference = newData["total"]["valueSumIst"] - newData["total"]["valueSum"];
+    newFullData[currentYear][currentMonth] = getDataWithValueSum(newData, dataPrototype);
 
-    newFullData[currentYear][currentMonth] = newData;
     setData(newFullData);
     setCurrentData(newData);
     saveData(newFullData);

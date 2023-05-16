@@ -32,8 +32,6 @@ export default function InputForm({ handleSubmit, inputFields, setInputFields, d
     setInputFields(newInput);
   }
 
-  console.log("inputFields", inputFields);
-
   return (
     <StyledForm
       onSubmit={(event) => {
@@ -45,7 +43,6 @@ export default function InputForm({ handleSubmit, inputFields, setInputFields, d
         <p>SOLL</p>
         <p></p>
         {Object.entries(dataPrototype).map(([objectName, objectValue]) => {
-          console.log("objectName", objectName);
           return (
             <React.Fragment key={objectName}>
               <label htmlFor={objectName} key={objectName}>

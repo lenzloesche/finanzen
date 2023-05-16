@@ -101,6 +101,7 @@ export default function Rename({ dataPrototype, changeCategoryName, deletCategor
               <input
                 id="rename"
                 value={rename}
+                maxLength={10}
                 onChange={(event) => {
                   handleRenameChange(event);
                 }}

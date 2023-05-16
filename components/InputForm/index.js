@@ -3,14 +3,7 @@ import StyledGrid from "./Grid";
 import StyledForm from "./Form";
 import React from "react";
 
-export default function InputForm({
-  handleSubmit,
-  inputFields,
-  setInputFields,
-  dataPrototype,
-  valueSumIst,
-  valueSum,
-}) {
+export default function InputForm({ handleSubmit, inputFields, setInputFields, dataPrototype, valueSumIst, valueSum }) {
   function handleChange(event, whichInputField) {
     let newInput = { ...inputFields };
     if (event.target.value <= 0 || event.target.value === "") {
@@ -36,9 +29,9 @@ export default function InputForm({
       newInput[whichInputField].valueIst = parseInt(event.target.value, 10);
       event.target.value = parseInt(event.target.value, 10);
     }
-
     setInputFields(newInput);
   }
+
   return (
     <StyledForm
       onSubmit={(event) => {

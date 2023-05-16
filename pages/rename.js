@@ -6,7 +6,7 @@ import { uid } from "uid";
 import styled from "styled-components";
 import Head from "next/head";
 
-export default function Rename({ dataPrototype, changeCategoryName, deletCategory, addCategory, changeCategoryColor }) {
+export default function Rename({ categories, changeCategoryName, deletCategory, addCategory, changeCategoryColor }) {
   const [categorySelected, setCategorySelected] = useState("Select");
   const [color, setColor] = useState("#ffffff");
   const [rename, setRename] = useState("Select");
@@ -28,9 +28,9 @@ export default function Rename({ dataPrototype, changeCategoryName, deletCategor
     if (selectedOption === "Select") {
       setRename("Select");
     } else {
-      const colorOfSelectedOption = dataPrototype[selectedOption].color;
+      const colorOfSelectedOption = categories[selectedOption].color;
       setColor(colorOfSelectedOption);
-      const nameOfSelectedOption = dataPrototype[selectedOption].name;
+      const nameOfSelectedOption = categories[selectedOption].name;
       setRename(nameOfSelectedOption);
     }
   }
@@ -83,7 +83,7 @@ export default function Rename({ dataPrototype, changeCategoryName, deletCategor
             }}
           >
             <option value="Select">Kategorie wählen</option>
-            {Object.entries(dataPrototype).map((eachcategory) => {
+            {Object.entries(categories).map((eachcategory) => {
               return (
                 <option key={uid()} value={eachcategory[0]}>
                   {eachcategory[1].name}

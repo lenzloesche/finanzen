@@ -104,7 +104,6 @@ export default function App({ Component, pageProps }) {
   }
 
   function saveData(dataToSave) {
-    console.log("dataToSave", dataToSave);
     localStorage.setItem("budgetBaerData", JSON.stringify(dataToSave));
   }
 
@@ -114,7 +113,7 @@ export default function App({ Component, pageProps }) {
         {...pageProps}
         data={data}
         setData={setData}
-        dataPrototype={categories}
+        categories={categories}
         saveData={saveData}
         isLoaded={isLoaded}
         setIsLoaded={setIsLoaded}

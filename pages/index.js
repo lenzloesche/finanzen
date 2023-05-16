@@ -17,7 +17,7 @@ const MyPieChart = dynamic(() => import("@/components/charts/piechart"), {
 export default function Home({
   data,
   setData,
-  dataPrototype,
+  categories,
   saveData,
   isLoaded,
   setIsLoaded,
@@ -47,7 +47,7 @@ export default function Home({
 
     let newData = {};
 
-    const arrayOfInputFields = Object.entries(dataPrototype).map(([key, value]) => ({ key, value }));
+    const arrayOfInputFields = Object.entries(categories).map(([key, value]) => ({ key, value }));
 
     for (let i = 0; i < arrayOfInputFields.length; i++) {
       const newObject = {
@@ -127,12 +127,12 @@ export default function Home({
           <Heading1>BÄRENÜBERSICHT</Heading1>
           <Calendar handleMinus={handleMinusYear} handlePlus={handlePlusYear} current={currentYear} />
           <Calendar handleMinus={handleMinusMonth} handlePlus={handlePlusMonth} current={months[currentMonth]} />
-          <MyPieChart data={currentData} dataPrototype={dataPrototype} difference={getValueSumIst(currentData) - getValueSum(currentData)}></MyPieChart>
+          <MyPieChart data={currentData} categories={categories} difference={getValueSumIst(currentData) - getValueSum(currentData)}></MyPieChart>
           <InputForm
             handleSubmit={handleSubmit}
             inputFields={inputFields}
             setInputFields={setInputFields}
-            dataPrototype={dataPrototype}
+            categories={categories}
             valueSum={getValueSum(currentData)}
             valueSumIst={getValueSumIst(currentData)}
           />{" "}

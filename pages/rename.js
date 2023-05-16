@@ -43,14 +43,14 @@ export default function Rename({ dataPrototype, changeCategoryName, deletCategor
     }
   }
 
-  function handleAddCategoryClick(event) {
+  function handleAddCategoryClick() {
     const newId = addCategory();
     setCategorySelected(newId);
     setColor("#ffffff");
     setRename("Neu");
   }
 
-  function handleDeleteCategoryClick(event) {
+  function handleDeleteCategoryClick() {
     deletCategory(categorySelected);
     setCategorySelected("Select");
     setRename("Select");
@@ -123,24 +123,12 @@ export default function Rename({ dataPrototype, changeCategoryName, deletCategor
               }}
             />
             <br />
-            <StyledButton
-              onClick={(event) => {
-                handleDeleteCategoryClick(event);
-              }}
-            >
-              Kategorie Löschen
-            </StyledButton>
+            <StyledButton onClick={handleDeleteCategoryClick}>Kategorie Löschen</StyledButton>
           </>
         )}
 
         <br />
-        <StyledButton
-          onClick={(event) => {
-            handleAddCategoryClick(event);
-          }}
-        >
-          Neue Kategorie hinzufügen
-        </StyledButton>
+        <StyledButton onClick={handleAddCategoryClick}>Neue Kategorie hinzufügen</StyledButton>
       </StyledFlexDiv>
     </>
   );

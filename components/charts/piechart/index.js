@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import styled from "styled-components";
 
-export default function MyPieChart({ data, dataPrototype, difference }) {
+export default function MyPieChart({ data, categories, difference }) {
   const [dataArray, setDataArray] = useState([]);
   const [dataArrayIst, setDataArrayIst] = useState([]);
   const [drawBear, setDrawBear] = useState(true);
@@ -34,19 +34,17 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
     convertDataObjectToArrayIst();
     function convertDataObjectToArray() {
       let howManyNonZeros = 0;
-      const newArray = Object.entries(dataPrototype).map(
-        ([objectId, objectValue]) => {
-          const valueSoll = data?.[objectId]?.value;
-          if (valueSoll) {
-            howManyNonZeros += Number(valueSoll);
-          }
-          return {
-            name: objectValue.name,
-            color: objectValue.color,
-            value: valueSoll,
-          };
+      const newArray = Object.entries(categories).map(([objectId, objectValue]) => {
+        const valueSoll = data?.[objectId]?.value;
+        if (valueSoll) {
+          howManyNonZeros += Number(valueSoll);
         }
-      );
+        return {
+          name: objectValue.name,
+          color: objectValue.color,
+          value: valueSoll,
+        };
+      });
       newArray.push({
         name: "",
         color: "#efefef",
@@ -62,19 +60,17 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
     }
     function convertDataObjectToArrayIst() {
       let howManyNonZeros = 0;
-      const newArray = Object.entries(dataPrototype).map(
-        ([objectId, objectValue]) => {
-          const valueIst = data?.[objectId]?.valueIst;
-          if (valueIst) {
-            howManyNonZeros += Number(valueIst);
-          }
-          return {
-            name: objectValue.name,
-            color: objectValue.color,
-            value: valueIst,
-          };
+      const newArray = Object.entries(categories).map(([objectId, objectValue]) => {
+        const valueIst = data?.[objectId]?.valueIst;
+        if (valueIst) {
+          howManyNonZeros += Number(valueIst);
         }
-      );
+        return {
+          name: objectValue.name,
+          color: objectValue.color,
+          value: valueIst,
+        };
+      });
       newArray.push({
         name: "",
         color: "#efefef",
@@ -88,70 +84,6 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
       setDataArrayIst(newArray);
     }
   }, [data]);
-
-  /* useEffect(() => {
-    let ueberschuss = 0;
-    let ueberschussIst = 0;
-    if (difference >= 0) {
-      ueberschuss = difference;
-    } else {
-      ueberschussIst = -difference;
-    }
-
-    convertDataObjectToArray();
-    convertDataObjectToArrayIst();
-    function convertDataObjectToArray() {
-      let howManyNonZeros = 0;
-      const newArray = Object.entries(data).map(([objectName, objectValue]) => {
-        if (objectValue.value) {
-          howManyNonZeros += Number(objectValue.value);
-        }
-        return {
-          name: dataPrototype[objectName]?.name,
-          color: dataPrototype[objectName]?.color,
-          value: objectValue.value,
-        };
-      });
-      newArray.splice(0, 1);
-      newArray.push({
-        name: "",
-        color: "#efefef",
-        value: ueberschuss,
-      });
-
-      if (howManyNonZeros > 0) {
-        setDrawBear(true);
-      } else {
-        setDrawBear(false);
-      }
-      setDataArray(newArray);
-    }
-    function convertDataObjectToArrayIst() {
-      let howManyNonZeros = 0;
-      const newArray = Object.entries(data).map(([objectName, objectValue]) => {
-        if (objectValue.valueIst) {
-          howManyNonZeros += Number(objectValue.valueIst);
-        }
-        return {
-          name: dataPrototype[objectName]?.name,
-          color: dataPrototype[objectName]?.color,
-          value: objectValue.valueIst,
-        };
-      });
-      newArray.splice(0, 1);
-      newArray.push({
-        name: "",
-        color: "#efefef",
-        value: ueberschussIst,
-      });
-      if (howManyNonZeros > 0) {
-        setDrawBearIst(true);
-      } else {
-        setDrawBearIst(false);
-      }
-      setDataArrayIst(newArray);
-    }
-  }, [data]); */
 
   return (
     <StyledContainerDiv drawBear={drawBear} drawBearIst={drawBearIst}>
@@ -206,10 +138,7 @@ export default function MyPieChart({ data, dataPrototype, difference }) {
 const StyledContainerDiv = styled.div`
   width: 350px;
   height: 320px;
-  ${(props) =>
-    !props.drawBear && !props.drawBearIst
-      ? "background-image: url('piechartbackgroundbaer.png');  background-size: cover;"
-      : ""}
+  ${(props) => (!props.drawBear && !props.drawBearIst ? "background-image: url('piechartbackgroundbaer.png');  background-size: cover;" : "")}
   border-radius: 10px;
   background-color: #efefef;
   @media (min-width: 440px) {

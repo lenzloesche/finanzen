@@ -3,7 +3,7 @@ import StyledGrid from "./Grid";
 import StyledForm from "./Form";
 import React from "react";
 
-export default function InputForm({ handleSubmit, inputFields, setInputFields, dataPrototype, valueSumIst, valueSum }) {
+export default function InputForm({ handleSubmit, inputFields, setInputFields, categories, valueSumIst, valueSum }) {
   function handleChange(event, whichInputField) {
     let newInput = { ...inputFields };
     if (event.target.value <= 0 || event.target.value === "") {
@@ -42,11 +42,11 @@ export default function InputForm({ handleSubmit, inputFields, setInputFields, d
         <p></p>
         <p>SOLL</p>
         <p></p>
-        {Object.entries(dataPrototype).map(([objectName, objectValue]) => {
+        {Object.entries(categories).map(([objectName, objectValue]) => {
           return (
             <React.Fragment key={objectName}>
               <label htmlFor={objectName} key={objectName}>
-                {dataPrototype[objectName]?.name}:
+                {categories[objectName]?.name}:
               </label>
               <StyledInput
                 min="0"
@@ -70,11 +70,11 @@ export default function InputForm({ handleSubmit, inputFields, setInputFields, d
         <p>IST</p>
         <p></p>
 
-        {Object.entries(dataPrototype).map(([objectName, objectValue]) => {
+        {Object.entries(categories).map(([objectName, objectValue]) => {
           return (
             <React.Fragment key={objectName}>
               <label htmlFor={`${objectName}Ist`} key={`${objectName}Ist`}>
-                {dataPrototype[objectName]?.name}:
+                {categories[objectName]?.name}:
               </label>
               <StyledInput
                 min="0"

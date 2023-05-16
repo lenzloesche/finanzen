@@ -1,5 +1,4 @@
 import StyledCalendar from ".";
-import ResizeObserver from "../../__mocks__/resizeObserver"; //is needed!
 import { render, screen, fireEvent } from "@testing-library/react";
 
 let current = 2023;

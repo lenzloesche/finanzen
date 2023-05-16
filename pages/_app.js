@@ -113,7 +113,7 @@ export default function App({ Component, pageProps }) {
         {...pageProps}
         data={data}
         setData={setData}
-        dataPrototype={categories}
+        categories={categories}
         saveData={saveData}
         isLoaded={isLoaded}
         setIsLoaded={setIsLoaded}
